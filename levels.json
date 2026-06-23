@@ -5,7 +5,7 @@
       "id": "LE1_GRUNDSTELLUNG",
       "title": "Grundstellung",
       "subtitle": "Die Heimatreihe deiner Finger",
-      "color": "#4facfe",
+      "color": "#ffc800",
       "levels": [
         { "id": "L1_1", "title": "Zeigefinger: F J", "intro": "Lege die Zeigefinger auf F und J – an den kleinen Erhebungen findest du blind zurück.", "allowedLetters": ["F", "J"], "exercise": { "type": "letters", "minLen": 1, "maxLen": 1 }, "rules": { "durationSeconds": 25, "minKeystrokes": 10, "minAccuracy": 0.9 }, "difficulty": { "spawnRate": 0.01, "speed": 0.85 }, "lives": 3 },
         { "id": "L1_2", "title": "Mittelfinger: D K", "intro": "Die Mittelfinger kommen dazu: D und K. Finger ruhen auf der Grundreihe.", "allowedLetters": ["F", "J", "D", "K"], "exercise": { "type": "letters", "minLen": 1, "maxLen": 1 }, "rules": { "durationSeconds": 25, "minKeystrokes": 10, "minAccuracy": 0.9 }, "difficulty": { "spawnRate": 0.011, "speed": 0.88 }, "lives": 3 },
@@ -18,7 +18,7 @@
       "id": "LE2_GRUNDREIHE",
       "title": "Grundreihe komplett",
       "subtitle": "G, H und erste Kombinationen",
-      "color": "#06ffa5",
+      "color": "#58cc02",
       "levels": [
         { "id": "L2_1", "title": "Mitte: G H", "intro": "Die Zeigefinger strecken sich zur Mitte: G und H. Danach zurück zur Grundstellung.", "allowedLetters": ["A", "S", "D", "F", "G", "H", "J", "K", "L"], "exercise": { "type": "letters", "minLen": 1, "maxLen": 1 }, "rules": { "durationSeconds": 28, "minKeystrokes": 10, "minAccuracy": 0.89 }, "difficulty": { "spawnRate": 0.012, "speed": 0.95 }, "lives": 3 },
         { "id": "L2_2", "title": "Kurze Kombis", "intro": "Zwei-Buchstaben-Folgen aus der kompletten Grundreihe.", "allowedLetters": ["A", "S", "D", "F", "G", "H", "J", "K", "L"], "exercise": { "type": "letters", "minLen": 2, "maxLen": 2 }, "rules": { "durationSeconds": 32, "minKeystrokes": 25, "minAccuracy": 0.88 }, "difficulty": { "spawnRate": 0.012, "speed": 1.0 }, "lives": 3 },
@@ -30,7 +30,7 @@
       "id": "LE3_OBEN_I",
       "title": "Obere Reihe I",
       "subtitle": "E I R U – Mittel- und Zeigefinger hoch",
-      "color": "#a78bfa",
+      "color": "#13c1b6",
       "levels": [
         { "id": "L3_1", "title": "Mittelfinger hoch: E I", "intro": "Obere Reihe, Mittelfinger nach oben: E (links) und I (rechts).", "allowedLetters": ["A", "S", "D", "F", "G", "H", "J", "K", "L", "E", "I"], "exercise": { "type": "letters", "minLen": 1, "maxLen": 2 }, "rules": { "durationSeconds": 30, "minKeystrokes": 20, "minAccuracy": 0.88 }, "difficulty": { "spawnRate": 0.012, "speed": 1.0 }, "lives": 3 },
         { "id": "L3_2", "title": "Zeigefinger hoch: R U", "intro": "Zeigefinger nach oben: R und U. Achte auf die schräge Bewegung.", "allowedLetters": ["A", "S", "D", "F", "G", "H", "J", "K", "L", "E", "I", "R", "U"], "exercise": { "type": "letters", "minLen": 1, "maxLen": 2 }, "rules": { "durationSeconds": 30, "minKeystrokes": 20, "minAccuracy": 0.88 }, "difficulty": { "spawnRate": 0.012, "speed": 1.05 }, "lives": 3 },
@@ -42,7 +42,7 @@
       "id": "LE4_OBEN_II",
       "title": "Obere Reihe II",
       "subtitle": "T Z W O Q P – obere Reihe komplett",
-      "color": "#f472b6",
+      "color": "#2b8cff",
       "levels": [
         { "id": "L4_1", "title": "T Z", "intro": "Zeigefinger-Dehnung nach oben innen: T und Z.", "allowedLetters": ["A", "S", "D", "F", "G", "H", "J", "K", "L", "E", "I", "R", "U", "T", "Z"], "exercise": { "type": "letters", "minLen": 1, "maxLen": 2 }, "rules": { "durationSeconds": 30, "minKeystrokes": 20, "minAccuracy": 0.87 }, "difficulty": { "spawnRate": 0.013, "speed": 1.1 }, "lives": 3 },
         { "id": "L4_2", "title": "W O", "intro": "Ringfinger nach oben: W und O.", "allowedLetters": ["A", "S", "D", "F", "G", "H", "J", "K", "L", "E", "I", "R", "U", "T", "Z", "W", "O"], "exercise": { "type": "letters", "minLen": 1, "maxLen": 2 }, "rules": { "durationSeconds": 30, "minKeystrokes": 20, "minAccuracy": 0.87 }, "difficulty": { "spawnRate": 0.013, "speed": 1.1 }, "lives": 3 },
@@ -54,7 +54,7 @@
       "id": "LE5_UNTEN_I",
       "title": "Untere Reihe I",
       "subtitle": "C M V N – Finger nach unten",
-      "color": "#fbbf24",
+      "color": "#a560f0",
       "levels": [
         { "id": "L5_1", "title": "C M", "intro": "Untere Reihe, Mittelfinger nach unten: C und M.", "allowedLetters": ["Q", "W", "E", "R", "T", "Z", "U", "I", "O", "P", "A", "S", "D", "F", "G", "H", "J", "K", "L", "C", "M"], "exercise": { "type": "letters", "minLen": 1, "maxLen": 2 }, "rules": { "durationSeconds": 30, "minKeystrokes": 20, "minAccuracy": 0.87 }, "difficulty": { "spawnRate": 0.013, "speed": 1.1 }, "lives": 3 },
         { "id": "L5_2", "title": "V N", "intro": "Zeigefinger nach unten: V und N.", "allowedLetters": ["Q", "W", "E", "R", "T", "Z", "U", "I", "O", "P", "A", "S", "D", "F", "G", "H", "J", "K", "L", "C", "M", "V", "N"], "exercise": { "type": "letters", "minLen": 1, "maxLen": 2 }, "rules": { "durationSeconds": 30, "minKeystrokes": 20, "minAccuracy": 0.87 }, "difficulty": { "spawnRate": 0.013, "speed": 1.15 }, "lives": 3 },
@@ -66,7 +66,7 @@
       "id": "LE6_UNTEN_II",
       "title": "Untere Reihe II",
       "subtitle": "B X Y – untere Reihe komplett",
-      "color": "#fb923c",
+      "color": "#ff5fa2",
       "levels": [
         { "id": "L6_1", "title": "B", "intro": "Zeigefinger-Dehnung nach unten: B.", "allowedLetters": ["Q", "W", "E", "R", "T", "Z", "U", "I", "O", "P", "A", "S", "D", "F", "G", "H", "J", "K", "L", "C", "M", "V", "N", "B"], "exercise": { "type": "letters", "minLen": 1, "maxLen": 3 }, "rules": { "durationSeconds": 30, "minKeystrokes": 30, "minAccuracy": 0.86 }, "difficulty": { "spawnRate": 0.014, "speed": 1.15 }, "lives": 3 },
         { "id": "L6_2", "title": "X Y", "intro": "Ring- und kleiner Finger nach unten: X und Y.", "allowedLetters": ["Q", "W", "E", "R", "T", "Z", "U", "I", "O", "P", "A", "S", "D", "F", "G", "H", "J", "K", "L", "C", "M", "V", "N", "B", "X", "Y"], "exercise": { "type": "letters", "minLen": 1, "maxLen": 3 }, "rules": { "durationSeconds": 30, "minKeystrokes": 30, "minAccuracy": 0.86 }, "difficulty": { "spawnRate": 0.014, "speed": 1.2 }, "lives": 3 },
@@ -78,7 +78,7 @@
       "id": "LE7_ALPHABET",
       "title": "Das ganze Alphabet",
       "subtitle": "Alle Buchstaben im Zusammenspiel",
-      "color": "#22d3ee",
+      "color": "#ff9600",
       "levels": [
         { "id": "L7_1", "title": "Alphabet kurz", "intro": "Alle Buchstaben in kurzen, zufälligen Folgen.", "allowedLetters": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"], "exercise": { "type": "letters", "minLen": 2, "maxLen": 3 }, "rules": { "durationSeconds": 40, "minKeystrokes": 45, "minAccuracy": 0.85 }, "difficulty": { "spawnRate": 0.014, "speed": 1.25 }, "lives": 3 },
         { "id": "L7_2", "title": "Bigramme", "intro": "Häufige Buchstabenpaare wie EN, ER, CH – die Bausteine echter Wörter.", "allowedLetters": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"], "exercise": { "type": "words", "words": ["EN", "ER", "CH", "DE", "IE", "ND", "TE", "EI", "IN", "ES", "UN", "ST", "GE", "BE", "SE", "RE", "AN", "DA", "IS", "CK"] }, "rules": { "durationSeconds": 40, "minKeystrokes": 30, "minAccuracy": 0.86 }, "difficulty": { "spawnRate": 0.012, "speed": 1.15 }, "lives": 3 },
@@ -90,7 +90,7 @@
       "id": "LE8_WOERTER",
       "title": "Wörter & Tempo",
       "subtitle": "Echte Wörter und Geschwindigkeit",
-      "color": "#ff6b6b",
+      "color": "#ff4b4b",
       "levels": [
         { "id": "L8_1", "title": "Kurze Wörter", "intro": "Kurze, häufige Wörter. Tippe sie als Einheit, nicht Buchstabe für Buchstabe.", "allowedLetters": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"], "exercise": { "type": "words", "words": ["UND", "DER", "DIE", "DAS", "IST", "EIN", "MIT", "ICH", "DEN", "VON", "BEI", "AUS", "NUR", "WIR", "HAT", "WAR", "WIE", "WAS", "HER", "MAN", "DOCH", "AUCH", "NOCH", "DANN"] }, "rules": { "durationSeconds": 45, "minKeystrokes": 50, "minAccuracy": 0.86 }, "difficulty": { "spawnRate": 0.011, "speed": 1.1 }, "lives": 3 },
         { "id": "L8_2", "title": "Mittlere Wörter", "intro": "Mittellange Wörter. Achte auf gleichmäßigen Rhythmus über das ganze Wort.", "allowedLetters": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"], "exercise": { "type": "words", "words": ["HAUS", "BAUM", "HAND", "KIND", "BUCH", "BLUME", "SONNE", "TISCH", "STUHL", "WASSER", "GARTEN", "FENSTER", "MORGEN", "ABEND", "LICHT", "WELT", "ZEIT", "JAHR", "SPIEL", "KATZE", "HUND", "VOGEL", "STRAND", "WOLKE"] }, "rules": { "durationSeconds": 50, "minKeystrokes": 80, "minAccuracy": 0.85 }, "difficulty": { "spawnRate": 0.01, "speed": 1.05 }, "lives": 4 },
