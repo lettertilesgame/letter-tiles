@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Letter Tiles – Lehrerbereich</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #060c1a; --bg2: #0d1b3e; --bg3: #0a1628;
+  --blue: #4facfe; --purple: #a78bfa; --gold: #ffc800;
+  --green: #06ffa5; --red: #ff6b6b;
+  --text: #e2e8f0; --muted: #64748b; --border: rgba(79,172,254,0.12);
+  --font: 'Inter', system-ui, sans-serif;
+  --head: 'Space Grotesk', system-ui, sans-serif;
+}
+body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; }
+
+/* ── NAV ── */
+nav {
+  background: rgba(6,12,26,0.95);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 32px;
+  display: flex; align-items: center; gap: 16px;
+  position: sticky; top: 0; z-index: 100;
+  backdrop-filter: blur(8px);
+}
+.nav-logo {
+  font-family: var(--head); font-size: 1.2rem; font-weight: 700;
+  background: linear-gradient(135deg, #4facfe, #a78bfa);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.nav-badge {
+  font-size: 0.65rem; font-weight: 700; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--gold);
+  border: 1px solid rgba(255,200,0,0.3); border-radius: 4px; padding: 2px 8px;
+}
+nav a { margin-left: auto; font-size: 0.8rem; color: var(--muted); text-decoration: none; }
+nav a:hover { color: var(--blue); }
+
+/* ── LAYOUT ── */
+.container { max-width: 1100px; margin: 0 auto; padding: 32px 24px; }
+
+/* ── TIPPY HEADER ── */
+.tippy-header {
+  display: flex; align-items: center; gap: 16px;
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 14px; padding: 20px 24px; margin-bottom: 32px;
+}
+.tippy-emoji { font-size: 2.4rem; line-height: 1; }
+.tippy-msg h1 { font-family: var(--head); font-size: 1.4rem; font-weight: 700; }
+.tippy-msg p { font-size: 0.85rem; color: var(--muted); margin-top: 4px; }
+
+/* ── CARDS ── */
+.cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 32px; }
+.card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 12px; padding: 20px 24px;
+}
+.card h2 { font-family: var(--head); font-size: 1rem; font-weight: 700; margin-bottom: 16px; color: var(--blue); }
+
+/* ── FORM ── */
+.form-row { display: flex; gap: 8px; }
+input[type=text] {
+  flex: 1; background: var(--bg3); border: 1px solid var(--border);
+  border-radius: 8px; padding: 9px 14px; color: var(--text); font-size: 0.85rem;
+  font-family: var(--font); outline: none; transition: border 0.2s;
+}
+input[type=text]:focus { border-color: var(--blue); }
+input[type=text]::placeholder { color: var(--muted); }
+.btn {
+  padding: 9px 18px; border-radius: 8px; font-size: 0.83rem; font-weight: 600;
+  cursor: pointer; border: none; font-family: var(--font); transition: opacity 0.15s;
+}
+.btn:hover { opacity: 0.85; }
+.btn-primary { background: linear-gradient(135deg, #1a3a6b, #2563eb); color: #bfdbfe; border: 1px solid rgba(79,172,254,0.3); }
+.btn-gold    { background: var(--gold); color: #3a3000; }
+.btn-sm      { padding: 5px 12px; font-size: 0.75rem; }
+.btn-ghost   { background: transparent; border: 1px solid var(--border); color: var(--muted); }
+.btn-ghost:hover { border-color: var(--blue); color: var(--blue); }
+
+/* ── CLASS LIST ── */
+.class-list { display: flex; flex-direction: column; gap: 6px; max-height: 220px; overflow-y: auto; }
+.class-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border);
+  background: var(--bg3); cursor: pointer; transition: border 0.15s;
+}
+.class-item:hover, .class-item.active { border-color: var(--blue); background: rgba(79,172,254,0.06); }
+.class-code { font-family: monospace; font-size: 0.85rem; font-weight: 700; color: var(--blue); }
+.class-name { font-size: 0.82rem; color: var(--muted); }
+.class-item .del { margin-left: auto; font-size: 0.7rem; color: var(--muted); cursor: pointer; }
+.class-item .del:hover { color: var(--red); }
+.empty-hint { font-size: 0.8rem; color: var(--muted); padding: 12px 0; }
+
+/* ── DASHBOARD ── */
+.dashboard { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 24px; }
+.dash-header {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 20px;
+  padding-bottom: 16px; border-bottom: 1px solid var(--border);
+}
+.dash-header h2 { font-family: var(--head); font-size: 1.1rem; font-weight: 700; }
+.dash-header .code-tag {
+  font-family: monospace; font-size: 0.75rem; background: rgba(79,172,254,0.1);
+  border: 1px solid rgba(79,172,254,0.2); color: var(--blue);
+  padding: 2px 8px; border-radius: 4px;
+}
+.dash-header .actions { margin-left: auto; display: flex; gap: 8px; }
+
+/* ── TABLE ── */
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+thead th {
+  text-align: left; padding: 8px 12px; font-size: 0.7rem;
+  font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--muted); border-bottom: 1px solid var(--border);
+  cursor: pointer; user-select: none; white-space: nowrap;
+}
+thead th:hover { color: var(--blue); }
+thead th.sorted { color: var(--blue); }
+tbody tr { border-bottom: 1px solid rgba(255,255,255,0.03); transition: background 0.1s; }
+tbody tr:hover { background: rgba(79,172,254,0.04); }
+tbody tr.clickable { cursor: pointer; }
+td { padding: 10px 12px; vertical-align: middle; }
+.student-name { font-weight: 600; color: var(--text); }
+.level-badge {
+  display: inline-flex; align-items: center;
+  font-size: 0.72rem; font-weight: 700; padding: 2px 8px; border-radius: 4px;
+  background: rgba(79,172,254,0.1); color: var(--blue); border: 1px solid rgba(79,172,254,0.2);
+}
+.acc { font-weight: 600; }
+.acc.good { color: var(--green); }
+.acc.ok   { color: var(--gold);  }
+.acc.bad  { color: var(--red);   }
+
+/* Activity dot */
+.dot-wrap { display: flex; align-items: center; gap: 7px; }
+.activity-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.dot-green  { background: var(--green); box-shadow: 0 0 6px rgba(6,255,165,0.5); }
+.dot-yellow { background: var(--gold);  box-shadow: 0 0 6px rgba(255,200,0,0.4); }
+.dot-gray   { background: #374151; }
+
+/* ── DETAIL PANEL ── */
+.detail-panel {
+  display: none; margin-top: 20px; padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+.detail-panel.open { display: block; }
+.detail-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+.detail-header h3 { font-family: var(--head); font-size: 1rem; font-weight: 700; }
+.detail-header .back { font-size: 0.78rem; color: var(--muted); cursor: pointer; }
+.detail-header .back:hover { color: var(--blue); }
+
+/* Mini chart */
+.chart-wrap { background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; padding: 16px; margin-bottom: 16px; }
+.chart-label { font-size: 0.7rem; color: var(--muted); margin-bottom: 10px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
+
+/* Session list */
+.sessions { display: flex; flex-direction: column; gap: 4px; max-height: 280px; overflow-y: auto; }
+.session-row {
+  display: grid; grid-template-columns: 28px 1fr 60px 70px 70px 50px;
+  gap: 8px; align-items: center;
+  padding: 7px 10px; border-radius: 6px; border: 1px solid var(--border);
+  font-size: 0.78rem; background: var(--bg3);
+}
+.session-row .s-pass { font-size: 0.85rem; }
+.session-row .s-date { color: var(--muted); }
+
+/* Loading / empty */
+.spinner {
+  display: flex; align-items: center; justify-content: center;
+  padding: 48px; color: var(--muted); font-size: 0.85rem; gap: 10px;
+}
+.spin { animation: spin 1s linear infinite; display: inline-block; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Toast */
+.toast {
+  position: fixed; bottom: 24px; right: 24px;
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 10px; padding: 12px 18px;
+  font-size: 0.83rem; color: var(--text);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  transform: translateY(80px); opacity: 0;
+  transition: all 0.25s; z-index: 999; max-width: 280px;
+}
+.toast.show { transform: translateY(0); opacity: 1; }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo">Letter Tiles</span>
+  <span class="nav-badge">Lehrerbereich</span>
+  <a href="index.html">← Zurück zum Spiel</a>
+</nav>
+
+<div class="container">
+
+  <!-- Tippy Header -->
+  <div class="tippy-header">
+    <div class="tippy-emoji">🐯</div>
+    <div class="tippy-msg">
+      <h1>Willkommen im Lehrerbereich!</h1>
+      <p>Klassen anlegen, Codes an Schüler verteilen, Fortschritt verfolgen und als CSV exportieren.</p>
+    </div>
+  </div>
+
+  <!-- Top Cards -->
+  <div class="cards">
+
+    <!-- Klasse anlegen -->
+    <div class="card">
+      <h2>Neue Klasse anlegen</h2>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <input type="text" id="newClassName" placeholder="Klassenname (z.B. Klasse 5a)">
+        <div class="form-row">
+          <input type="text" id="newClassCode" placeholder="Klassencode (z.B. 5A-2026)">
+          <button class="btn btn-primary" onclick="createClass()">Anlegen</button>
+        </div>
+        <p style="font-size:0.72rem;color:var(--muted);margin-top:2px;">
+          Den Klassencode gibst du den Schülern – sie tippen ihn beim ersten Spielstart ein.
+        </p>
+      </div>
+    </div>
+
+    <!-- Klassen-Liste -->
+    <div class="card">
+      <h2>Meine Klassen</h2>
+      <div class="class-list" id="classList">
+        <div class="empty-hint">Noch keine Klassen angelegt.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Dashboard -->
+  <div class="dashboard" id="dashboard">
+    <div class="spinner" id="dashPlaceholder">
+      <span>← Klasse auswählen um das Dashboard zu laden</span>
+    </div>
+    <div id="dashContent" style="display:none;"></div>
+  </div>
+
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
+<script>
+// ─── State ──────────────────────────────────────────────────────────────────
+let classes      = JSON.parse(localStorage.getItem('lt_teacher_classes') || '[]');
+let activeClass  = null;
+let allStudents  = [];
+let sortKey      = 'lastActive';
+let sortDir      = -1; // -1 = desc
+let detailStudent = null;
+
+// ─── Toast ──────────────────────────────────────────────────────────────────
+function toast(msg, duration = 3000) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), duration);
+}
+
+// ─── Klassen speichern ──────────────────────────────────────────────────────
+function saveClasses() {
+  localStorage.setItem('lt_teacher_classes', JSON.stringify(classes));
+}
+
+// ─── Klasse anlegen ─────────────────────────────────────────────────────────
+async function createClass() {
+  const name = document.getElementById('newClassName').value.trim();
+  const code = document.getElementById('newClassCode').value.trim().toUpperCase();
+  if (!name || !code) { toast('⚠ Bitte Name und Code eingeben.'); return; }
+  if (classes.find(c => c.code === code)) { toast('⚠ Klassencode existiert bereits.'); return; }
+
+  const { error } = await db.from('classes').insert({ name, code });
+  if (error && !error.message.includes('unique')) {
+    toast('Fehler: ' + error.message); return;
+  }
+
+  classes.push({ name, code });
+  saveClasses();
+  document.getElementById('newClassName').value = '';
+  document.getElementById('newClassCode').value = '';
+  renderClassList();
+  toast('✓ Klasse "' + name + '" angelegt! Code: ' + code);
+}
+
+// ─── Klassen-Liste rendern ──────────────────────────────────────────────────
+function renderClassList() {
+  const el = document.getElementById('classList');
+  if (!classes.length) {
+    el.innerHTML = '<div class="empty-hint">Noch keine Klassen angelegt.</div>';
+    return;
+  }
+  el.innerHTML = classes.map(c => `
+    <div class="class-item ${activeClass?.code === c.code ? 'active' : ''}"
+         onclick="selectClass(${JSON.stringify(c).replace(/"/g, '&quot;')})">
+      <span class="class-code">${c.code}</span>
+      <span class="class-name">${c.name}</span>
+      <span class="del" onclick="event.stopPropagation();deleteClass('${c.code}')">✕</span>
+    </div>
+  `).join('');
+}
+
+// ─── Klasse löschen ─────────────────────────────────────────────────────────
+function deleteClass(code) {
+  if (!confirm('Klasse "' + code + '" wirklich entfernen? (Schülerdaten bleiben in Supabase erhalten)')) return;
+  classes = classes.filter(c => c.code !== code);
+  saveClasses();
+  if (activeClass?.code === code) { activeClass = null; resetDashboard(); }
+  renderClassList();
+}
+
+// ─── Dashboard zurücksetzen ──────────────────────────────────────────────────
+function resetDashboard() {
+  document.getElementById('dashPlaceholder').style.display = 'flex';
+  document.getElementById('dashContent').style.display = 'none';
+}
+
+// ─── Klasse auswählen + Dashboard laden ─────────────────────────────────────
+async function selectClass(cls) {
+  activeClass = cls;
+  detailStudent = null;
+  renderClassList();
+
+  const ph = document.getElementById('dashPlaceholder');
+  const dc = document.getElementById('dashContent');
+  ph.innerHTML = '<span class="spin">⟳</span> Lade Daten…';
+  ph.style.display = 'flex';
+  dc.style.display = 'none';
+
+  // Daten aus Supabase holen
+  const { data: progress, error } = await db
+    .from('progress')
+    .select('*')
+    .eq('class_code', cls.code)
+    .order('played_at', { ascending: false });
+
+  if (error) { ph.innerHTML = '⚠ Fehler: ' + error.message; return; }
+
+  // Schüler gruppieren
+  const map = {};
+  for (const row of (progress || [])) {
+    if (!map[row.student_name]) {
+      map[row.student_name] = {
+        name: row.student_name,
+        sessions: [],
+        maxLesson: 0,
+        maxLevel: 0,
+        totalKeystrokes: 0,
+        totalAcc: 0,
+        passedCount: 0,
+        lastActive: row.played_at
+      };
+    }
+    const s = map[row.student_name];
+    s.sessions.push(row);
+    s.totalKeystrokes += row.keystrokes || 0;
+    s.totalAcc += row.accuracy || 0;
+    if (row.passed) s.passedCount++;
+    if (row.lesson_index > s.maxLesson) s.maxLesson = row.lesson_index;
+    if (row.level_index > s.maxLevel) s.maxLevel = row.level_index;
+  }
+
+  allStudents = Object.values(map).map(s => ({
+    ...s,
+    avgAcc: s.sessions.length ? s.totalAcc / s.sessions.length : 0
+  }));
+
+  ph.style.display = 'none';
+  dc.style.display = 'block';
+  renderDashboard();
+}
+
+// ─── Dashboard rendern ──────────────────────────────────────────────────────
+function renderDashboard() {
+  const dc = document.getElementById('dashContent');
+  const sorted = [...allStudents].sort((a, b) => {
+    let av = a[sortKey], bv = b[sortKey];
+    if (typeof av === 'string') return av.localeCompare(bv) * sortDir;
+    return ((av || 0) - (bv || 0)) * sortDir;
+  });
+
+  const th = (key, label) => `
+    <th onclick="setSort('${key}')" class="${sortKey === key ? 'sorted' : ''}">
+      ${label} ${sortKey === key ? (sortDir === -1 ? '↓' : '↑') : ''}
+    </th>`;
+
+  const activityDot = (dateStr) => {
+    const days = (Date.now() - new Date(dateStr)) / 86400000;
+    if (days <= 7)  return '<span class="activity-dot dot-green"></span>';
+    if (days <= 14) return '<span class="activity-dot dot-yellow"></span>';
+    return '<span class="activity-dot dot-gray"></span>';
+  };
+
+  const accClass = (a) => a >= 85 ? 'good' : a >= 65 ? 'ok' : 'bad';
+
+  dc.innerHTML = `
+    <div class="dash-header">
+      <h2>${activeClass.name}</h2>
+      <span class="code-tag">${activeClass.code}</span>
+      <span style="font-size:0.8rem;color:var(--muted);">${allStudents.length} Schüler</span>
+      <div class="actions">
+        <button class="btn btn-sm btn-ghost" onclick="selectClass(activeClass)">↻ Aktualisieren</button>
+        <button class="btn btn-sm btn-gold" onclick="exportCSV()">↓ CSV Export</button>
+      </div>
+    </div>
+
+    ${allStudents.length === 0 ? `
+      <div class="spinner">Noch keine Schüler in dieser Klasse. Teile den Code <strong style="color:var(--blue);margin:0 4px;">${activeClass.code}</strong> mit deinen Schülern.</div>
+    ` : `
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              ${th('name',           'Name')}
+              ${th('maxLesson',      'Lektion')}
+              ${th('maxLevel',       'Level')}
+              ${th('avgAcc',         'Ø Genauigkeit')}
+              ${th('totalKeystrokes','Anschläge')}
+              ${th('passedCount',    'Bestanden')}
+              ${th('lastActive',     'Zuletzt aktiv')}
+            </tr>
+          </thead>
+          <tbody>
+            ${sorted.map(s => `
+              <tr class="clickable" onclick="openDetail('${s.name.replace(/'/g, "\\'")}')">
+                <td><span class="student-name">${s.name}</span></td>
+                <td><span class="level-badge">L${s.maxLesson + 1}</span></td>
+                <td><span class="level-badge">${s.maxLevel + 1}</span></td>
+                <td><span class="acc ${accClass(s.avgAcc)}">${s.avgAcc.toFixed(1)}%</span></td>
+                <td>${s.totalKeystrokes.toLocaleString('de-DE')}</td>
+                <td>${s.passedCount} / ${s.sessions.length}</td>
+                <td><div class="dot-wrap">${activityDot(s.lastActive)}${new Date(s.lastActive).toLocaleDateString('de-DE')}</div></td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
+    `}
+
+    <div class="detail-panel" id="detailPanel"></div>
+  `;
+}
+
+// ─── Sortierung ──────────────────────────────────────────────────────────────
+function setSort(key) {
+  if (sortKey === key) sortDir *= -1;
+  else { sortKey = key; sortDir = -1; }
+  renderDashboard();
+  if (detailStudent) openDetail(detailStudent);
+}
+
+// ─── Detail-Ansicht ──────────────────────────────────────────────────────────
+function openDetail(name) {
+  detailStudent = name;
+  const s = allStudents.find(x => x.name === name);
+  if (!s) return;
+
+  const panel = document.getElementById('detailPanel');
+  if (!panel) return;
+  panel.classList.add('open');
+
+  // Genauigkeit über Zeit (letzten 10 Sessions)
+  const last10 = [...s.sessions].reverse().slice(-10);
+  const chartW = 380, chartH = 80;
+  const vals   = last10.map(r => r.accuracy || 0);
+  const maxV   = Math.max(...vals, 100);
+  const points = vals.map((v, i) => {
+    const x = (i / Math.max(vals.length - 1, 1)) * (chartW - 24) + 12;
+    const y = chartH - 8 - (v / maxV) * (chartH - 16);
+    return `${x},${y}`;
+  }).join(' ');
+
+  panel.innerHTML = `
+    <div class="detail-header">
+      <span class="back" onclick="closeDetail()">← Zurück</span>
+      <h3>🐯 ${s.name}</h3>
+      <span style="font-size:0.78rem;color:var(--muted);">${s.sessions.length} Sessions · ${s.passedCount} bestanden</span>
+    </div>
+
+    <div class="chart-wrap">
+      <div class="chart-label">Genauigkeit über Zeit (letzte ${last10.length} Sessions)</div>
+      <svg width="100%" viewBox="0 0 ${chartW} ${chartH}" style="overflow:visible;">
+        <defs>
+          <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#4facfe"/>
+            <stop offset="100%" stop-color="#a78bfa"/>
+          </linearGradient>
+        </defs>
+        <!-- Grid lines -->
+        ${[25,50,75,100].map(v => {
+          const y = chartH - 8 - (v / maxV) * (chartH - 16);
+          return `<line x1="12" y1="${y}" x2="${chartW-12}" y2="${y}" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+                  <text x="4" y="${y+3}" fill="#475569" font-size="9">${v}%</text>`;
+        }).join('')}
+        ${vals.length > 1 ? `<polyline points="${points}" fill="none" stroke="url(#lineGrad)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>` : ''}
+        ${vals.map((v, i) => {
+          const x = (i / Math.max(vals.length - 1, 1)) * (chartW - 24) + 12;
+          const y = chartH - 8 - (v / maxV) * (chartH - 16);
+          return `<circle cx="${x}" cy="${y}" r="4" fill="#4facfe" stroke="#060c1a" stroke-width="2"/>`;
+        }).join('')}
+      </svg>
+    </div>
+
+    <div class="sessions">
+      <div class="session-row" style="font-weight:700;font-size:0.7rem;color:var(--muted);background:none;border:none;padding-bottom:4px;">
+        <span></span><span>Level</span><span>Genauigkeit</span><span>Anschläge</span><span>Dauer</span><span>Datum</span>
+      </div>
+      ${[...s.sessions].map(r => `
+        <div class="session-row">
+          <span class="s-pass">${r.passed ? '✅' : '❌'}</span>
+          <span>L${r.lesson_index + 1}.${r.level_index + 1}</span>
+          <span class="acc ${r.accuracy >= 85 ? 'good' : r.accuracy >= 65 ? 'ok' : 'bad'}">${(r.accuracy||0).toFixed(1)}%</span>
+          <span>${(r.keystrokes||0).toLocaleString('de-DE')}</span>
+          <span>${r.duration_seconds ? Math.round(r.duration_seconds) + 's' : '–'}</span>
+          <span class="s-date">${new Date(r.played_at).toLocaleDateString('de-DE')}</span>
+        </div>
+      `).join('')}
+    </div>
+  `;
+
+  panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function closeDetail() {
+  detailStudent = null;
+  const panel = document.getElementById('detailPanel');
+  if (panel) panel.classList.remove('open');
+}
+
+// ─── CSV Export ──────────────────────────────────────────────────────────────
+function exportCSV() {
+  if (!activeClass || !allStudents.length) { toast('Keine Daten zum Exportieren.'); return; }
+  const rows = [['Name','Klasse','Max. Lektion','Max. Level','Ø Genauigkeit (%)','Anschläge gesamt','Bestanden','Sessions','Zuletzt aktiv']];
+  for (const s of allStudents) {
+    rows.push([
+      s.name, activeClass.code, s.maxLesson + 1, s.maxLevel + 1,
+      s.avgAcc.toFixed(1), s.totalKeystrokes, s.passedCount,
+      s.sessions.length, new Date(s.lastActive).toLocaleDateString('de-DE')
+    ]);
+  }
+  const csv = '\uFEFF' + rows.map(r => r.join(';')).join('\n'); // BOM für Excel
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `letter-tiles-${activeClass.code}.csv`;
+  a.click();
+  toast('✓ CSV wird heruntergeladen…');
+}
+
+// ─── Init ────────────────────────────────────────────────────────────────────
+renderClassList();
+</script>
+</body>
+</html>

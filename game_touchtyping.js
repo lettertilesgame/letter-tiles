@@ -1196,6 +1196,19 @@ class LearningMode {
 
     if (passed) playLevelUpSound(); else playGameOverSound();
 
+    // Supabase: Fortschritt speichern
+    if (typeof ltSaveProgress === 'function') {
+      const elapsed = (performance.now() - this.startTimeMs) / 1000;
+      ltSaveProgress({
+        lessonIndex:     this.activeLevel._lessonIndex ?? 0,
+        levelIndex:      this.activeIndex,
+        accuracy:        this.engine.getAccuracy(),
+        keystrokes:      this.engine.totalKeystrokes,
+        durationSeconds: elapsed,
+        passed:          passed
+      });
+    }
+
     this.engine.beginTransition();
     this.engine.endTransition();
     App.showFeedback(feedback);
@@ -1241,6 +1254,9 @@ const App = {
   },
 
   async init() {
+    // Supabase: Schüler registrieren falls noch kein Klassencode gesetzt
+    if (typeof ltEnsureStudent === 'function') await ltEnsureStudent();
+
     // wire input once
     document.addEventListener('keydown', (ev) => {
       const k = ev.key.toUpperCase();
