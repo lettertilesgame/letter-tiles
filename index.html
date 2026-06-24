@@ -1149,40 +1149,7 @@
       </table>
       <div id="emptyState" class="empty" style="display:none;">Noch keine Schüler in dieser Klasse. Teile den Code mit deiner Klasse.</div>
 
-      <details>
-        <summary>Einrichtung (einmalig) — Supabase-Tabelle & Zugang</summary>
-        <p style="font-size:0.86rem;line-height:1.6;color:#cbd5e1;margin:8px 0;">
-          1. Kostenloses Projekt auf <a href="https://supabase.com" target="_blank" rel="noopener">supabase.com</a> anlegen.<br>
-          2. <code>supabase-config.js</code> öffnen und <code>url</code> + <code>anonKey</code> eintragen
-          (Project Settings → API).<br>
-          3. Im Supabase SQL-Editor dieses SQL einmal ausführen:
-        </p>
-        <pre><code>create table if not exists public.lt_students (
-  id uuid primary key default gen_random_uuid(),
-  class_code text not null,
-  student_id text not null,
-  name text not null,
-  levels_passed int default 0,
-  total_levels int default 0,
-  current_lesson int default 1,
-  current_level int default 1,
-  accuracy int default 0,
-  updated_at timestamptz default now(),
-  unique (class_code, student_id)
-);
 
-alter table public.lt_students enable row level security;
-create policy "anon read"   on public.lt_students for select to anon using (true);
-create policy "anon insert" on public.lt_students for insert to anon with check (true);
-create policy "anon update" on public.lt_students for update to anon using (true) with check (true);
-
--- Live-Updates aktivieren:
-alter publication supabase_realtime add table public.lt_students;</code></pre>
-        <p style="font-size:0.84rem;line-height:1.6;color:#fde68a;">
-          Hinweis Datenschutz: Mit diesen offenen Regeln kann jede Person mit Klassencode + öffentlichem
-          anon-Key die Klassendaten lesen/schreiben. Nutze nur Vornamen/Spitznamen und keine sensiblen Daten.
-        </p>
-      </details>
 
       <p class="foot">
         Schüler treten in der App über „🎓 Klasse beitreten" (⋮-Menü) mit diesem Code bei.
