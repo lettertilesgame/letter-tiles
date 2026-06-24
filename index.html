@@ -850,9 +850,178 @@
       padding: 2px 9px;
       border-radius: 999px;
     }
+
+    /* ════════════ Classroom (student join) ════════════ */
+    .class-chip {
+      background: rgba(255,255,255,0.04);
+      border-color: rgba(79,172,254,0.18);
+      color: #94a3b8;
+      font-size: 0.82rem;
+    }
+    .class-chip:hover {
+      background: rgba(79,172,254,0.1);
+      border-color: rgba(79,172,254,0.4);
+      color: #cbd5e1;
+    }
+    .class-chip.joined {
+      background: rgba(6,255,165,0.08);
+      border-color: rgba(6,255,165,0.3);
+      color: #6ee7b7;
+    }
+
+    #class-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 600;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: rgba(6, 12, 26, 0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+    .class-card {
+      width: 100%;
+      max-width: 380px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      padding: 26px 24px;
+      border-radius: 20px;
+      background: rgba(13, 24, 56, 0.92);
+      border: 1px solid rgba(79,172,254,0.25);
+      box-shadow: 0 24px 70px rgba(0,0,0,0.5);
+      text-align: center;
+    }
+    #class-tippy { width: 80px; height: 80px; }
+    #class-title {
+      font-family: 'Space Grotesk', system-ui, sans-serif;
+      font-size: 1.4rem; font-weight: 700; color: #f1f5f9;
+    }
+    .class-sub { font-size: 0.85rem; line-height: 1.5; color: #94a3b8; }
+    #class-overlay input {
+      width: 100%;
+      background: rgba(8,16,36,0.7);
+      border: 1px solid rgba(79,172,254,0.2);
+      color: #e2e8f0;
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-size: 1rem;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    #class-code-input { letter-spacing: 0.16em; text-transform: uppercase; text-align: center; }
+    #class-overlay input:focus { outline: none; border-color: rgba(79,172,254,0.6); }
+    #class-msg { font-size: 0.82rem; min-height: 1.1em; color: #fca5a5; }
+    #class-msg.ok { color: #6ee7b7; }
+    #class-join {
+      background: linear-gradient(135deg, #0f3d2e, #06b97a);
+      border-color: rgba(6,255,165,0.35); color: #a7f3d0;
+    }
+    #class-join:hover { background: linear-gradient(135deg, #14523d, #08d98f); }
+    #class-leave {
+      background: rgba(255,107,107,0.1); border-color: rgba(255,107,107,0.28); color: #fca5a5;
+    }
+    #class-leave:hover { background: rgba(255,107,107,0.18); }
+    #class-close { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.1); color: #64748b; }
+    #class-close:hover { background: rgba(255,255,255,0.08); color: #94a3b8; }
+
+    /* ════════════ ⋮ menu (top-right) ════════════ */
+    #topMenu { position: fixed; top: 8px; right: 10px; z-index: 460; }
+    #menuBtn {
+      width: 38px; height: 38px; padding: 0; border-radius: 50%;
+      font-size: 22px; line-height: 1;
+      background: rgba(13,27,62,0.8); border: 1px solid rgba(79,172,254,0.22);
+      color: #cbd5e1; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    }
+    #menuBtn:hover { background: rgba(26,50,100,0.9); color: #fff; }
+    #appMenu {
+      position: absolute; top: 46px; right: 0; min-width: 210px;
+      flex-direction: column; gap: 2px; padding: 6px; display: none;
+      background: rgba(13,24,56,0.97); border: 1px solid rgba(79,172,254,0.2);
+      border-radius: 12px; box-shadow: 0 16px 40px rgba(0,0,0,0.5);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    }
+    #appMenu.open { display: flex; }
+    .appMenuItem {
+      text-align: left; background: transparent; border: 1px solid transparent;
+      color: #cbd5e1; padding: 10px 12px; border-radius: 8px; font-size: 0.88rem; font-weight: 500;
+    }
+    .appMenuItem:hover { background: rgba(79,172,254,0.12); color: #fff; }
+
+    /* ════════════ Teacher dashboard (in-page view) ════════════ */
+    #teacher-view {
+      position: fixed; inset: 0; z-index: 620; display: none;
+      overflow-y: auto;
+      background:
+        radial-gradient(ellipse 70% 40% at 50% -10%, rgba(79,172,254,0.12) 0%, transparent 70%),
+        #060c1a;
+      padding: 24px 20px 60px;
+    }
+    #teacher-view .wrap { max-width: 920px; margin: 0 auto; }
+    #teacher-back { margin-bottom: 16px; }
+    #teacher-view h1 {
+      font-family: 'Space Grotesk', system-ui, sans-serif;
+      font-size: 2rem; font-weight: 700; letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #4facfe, #00f2fe 45%, #a78bfa);
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    #teacher-view .sub { color: #64748b; font-size: 0.9rem; margin-top: 4px; }
+    #teacher-view .banner { margin: 18px 0; padding: 14px 16px; border-radius: 12px; font-size: 0.88rem; line-height: 1.5; }
+    #teacher-view .banner.warn { background: rgba(251,191,36,0.08); border: 1px solid rgba(251,191,36,0.3); color: #fde68a; }
+    #teacher-view .banner.ok   { background: rgba(6,255,165,0.06); border: 1px solid rgba(6,255,165,0.25); color: #a7f3d0; }
+    #teacher-view .row { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end; margin: 18px 0; }
+    #teacher-view .field { display: flex; flex-direction: column; gap: 5px; }
+    #teacher-view label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b; }
+    #teacher-view input {
+      background: rgba(13,27,62,0.7); border: 1px solid rgba(79,172,254,0.2); color: #e2e8f0;
+      border-radius: 10px; padding: 10px 13px; font-size: 1rem;
+      font-family: 'Space Grotesk', sans-serif; letter-spacing: 0.08em; width: 180px;
+    }
+    #teacher-view input:focus { outline: none; border-color: rgba(79,172,254,0.6); }
+    #teacher-view .btn-primary { background: linear-gradient(135deg, #1a3a6b, #2563eb); border-color: rgba(79,172,254,0.35); color: #bfdbfe; }
+    #teacher-view .btn-primary:hover { background: linear-gradient(135deg, #1e4a8a, #3b7eff); }
+    #teacher-view .btn-ghost { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.1); color: #94a3b8; }
+    #teacher-view .btn-ghost:hover { background: rgba(255,255,255,0.08); color: #cbd5e1; }
+    #teacher-view .codepill {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 700; letter-spacing: 0.18em; font-size: 1.3rem;
+      color: #00f2fe; background: rgba(0,242,254,0.08); border: 1px solid rgba(0,242,254,0.3);
+      padding: 8px 16px; border-radius: 10px;
+    }
+    #teacher-view .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin: 20px 0; }
+    #teacher-view .card { background: rgba(13,27,62,0.55); border: 1px solid rgba(79,172,254,0.14); border-radius: 14px; padding: 16px; }
+    #teacher-view .card .k { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b; }
+    #teacher-view .card .v { font-family: 'Space Grotesk', sans-serif; font-size: 1.8rem; font-weight: 700; color: #f1f5f9; margin-top: 4px; }
+    #teacher-view table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+    #teacher-view th, #teacher-view td { text-align: left; padding: 11px 12px; font-size: 0.88rem; }
+    #teacher-view th { color: #64748b; font-weight: 600; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    #teacher-view tbody tr { border-bottom: 1px solid rgba(255,255,255,0.05); }
+    #teacher-view tbody tr:hover { background: rgba(255,255,255,0.02); }
+    #teacher-view td.name { font-weight: 600; color: #e2e8f0; }
+    #teacher-view .bar { height: 7px; border-radius: 4px; background: rgba(255,255,255,0.07); overflow: hidden; min-width: 90px; }
+    #teacher-view .bar > span { display: block; height: 100%; background: linear-gradient(90deg, #4facfe, #06ffa5); }
+    #teacher-view .muted { color: #64748b; }
+    #teacher-view .acc-good { color: #6ee7b7; } #teacher-view .acc-mid { color: #fde68a; } #teacher-view .acc-low { color: #fca5a5; }
+    #teacher-view .empty { color: #475569; text-align: center; padding: 32px; font-size: 0.9rem; }
+    #teacher-view details { margin-top: 28px; background: rgba(13,27,62,0.4); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 4px 16px; }
+    #teacher-view summary { cursor: pointer; padding: 12px 0; font-weight: 600; color: #94a3b8; }
+    #teacher-view pre { background: #0a1124; border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 14px; overflow-x: auto; font-size: 0.78rem; line-height: 1.5; color: #cbd5e1; margin: 8px 0 16px; }
+    #teacher-view code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+    #teacher-view a { color: #4facfe; }
+    #teacher-view .foot { margin-top: 26px; font-size: 0.78rem; color: #475569; line-height: 1.6; }
   </style>
 </head>
 <body>
+
+  <!-- Three-dot app menu (top-right) -->
+  <div id="topMenu">
+    <button id="menuBtn" aria-label="Menü" title="Menü">⋮</button>
+    <div id="appMenu">
+      <button class="appMenuItem" id="mi-teacher">👩‍🏫 Lehrer-Dashboard</button>
+      <button class="appMenuItem" id="mi-class">🎓 Klasse beitreten</button>
+    </div>
+  </div>
 
   <!-- Game canvas (background) -->
   <canvas id="game"></canvas>
@@ -883,6 +1052,8 @@
     <div id="levelList"></div>
 
     <button id="backToMenuBtn">← Zurück</button>
+
+    <button id="classBtn" class="class-chip">👩‍🏫 Klasse beitreten</button>
 
     <p id="hint"></p>
   </div>
@@ -925,17 +1096,220 @@
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="supabase.js"></script>
-  <script src="game_touchtyping.js"></script>
+  <!-- Class join overlay (student) -->
+  <div id="class-overlay">
+    <div class="class-card">
+      <div id="class-tippy" class="tippy-bob"></div>
+      <h2 id="class-title">Klasse beitreten</h2>
+      <p class="class-sub">Gib den Code von deiner Lehrkraft ein – dein Fortschritt erscheint dann in ihrem Dashboard.</p>
+      <input id="class-code-input" placeholder="Klassencode" maxlength="8" autocomplete="off" autocapitalize="characters" />
+      <input id="class-name-input" placeholder="Dein Name" maxlength="24" autocomplete="off" />
+      <p id="class-msg"></p>
+      <div class="btn-row">
+        <button id="class-join">Beitreten</button>
+        <button id="class-leave">Verlassen</button>
+        <button id="class-close">Schließen</button>
+      </div>
+    </div>
+  </div>
 
-<div id="teacherLink" style="position:fixed;bottom:16px;right:20px;z-index:999;">
-  <a href="teacher.html" style="font-size:0.72rem;color:#334155;text-decoration:none;
-     background:rgba(6,12,26,0.7);border:1px solid rgba(79,172,254,0.15);
-     padding:6px 12px;border-radius:6px;backdrop-filter:blur(8px);transition:color 0.2s;"
-     onmouseover="this.style.color='#4facfe'" onmouseout="this.style.color='#334155'">
-    🐯 Lehrerbereich
-  </a>
-</div>
+  <!-- Teacher dashboard (opened from the ⋮ menu) -->
+  <div id="teacher-view">
+    <div class="wrap">
+      <button id="teacher-back" class="btn-ghost">← Zurück zum Spiel</button>
+      <h1>Lehrer-Dashboard</h1>
+      <p class="sub">Live-Überblick über den Lernfortschritt deiner Klasse.</p>
+
+      <div id="cfg-banner"></div>
+
+      <div class="row">
+        <div class="field">
+          <label for="code">Klassencode</label>
+          <input id="code" placeholder="z. B. AB12C" maxlength="8" autocomplete="off" />
+        </div>
+        <button class="btn-primary" id="watchBtn">Klasse beobachten</button>
+        <button class="btn-ghost" id="genBtn">Neuen Code erzeugen</button>
+        <button class="btn-ghost" id="refreshBtn">Aktualisieren</button>
+      </div>
+
+      <div id="liveInfo"></div>
+
+      <div class="cards" id="cards" style="display:none;">
+        <div class="card"><div class="k">Schüler</div><div class="v" id="cStudents">0</div></div>
+        <div class="card"><div class="k">Ø Level geschafft</div><div class="v" id="cAvgLevels">0</div></div>
+        <div class="card"><div class="k">Ø Genauigkeit</div><div class="v" id="cAvgAcc">–</div></div>
+        <div class="card"><div class="k">Aktiv (5 Min)</div><div class="v" id="cActive">0</div></div>
+      </div>
+
+      <table id="tbl" style="display:none;">
+        <thead>
+          <tr><th>Name</th><th>Lektion</th><th>Aktuelles Level</th><th>Fortschritt</th><th>Genauigkeit</th><th>Zuletzt aktiv</th></tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+      <div id="emptyState" class="empty" style="display:none;">Noch keine Schüler in dieser Klasse. Teile den Code mit deiner Klasse.</div>
+
+      <details>
+        <summary>Einrichtung (einmalig) — Supabase-Tabelle & Zugang</summary>
+        <p style="font-size:0.86rem;line-height:1.6;color:#cbd5e1;margin:8px 0;">
+          1. Kostenloses Projekt auf <a href="https://supabase.com" target="_blank" rel="noopener">supabase.com</a> anlegen.<br>
+          2. <code>supabase-config.js</code> öffnen und <code>url</code> + <code>anonKey</code> eintragen
+          (Project Settings → API).<br>
+          3. Im Supabase SQL-Editor dieses SQL einmal ausführen:
+        </p>
+        <pre><code>create table if not exists public.lt_students (
+  id uuid primary key default gen_random_uuid(),
+  class_code text not null,
+  student_id text not null,
+  name text not null,
+  levels_passed int default 0,
+  total_levels int default 0,
+  current_lesson int default 1,
+  current_level int default 1,
+  accuracy int default 0,
+  updated_at timestamptz default now(),
+  unique (class_code, student_id)
+);
+
+alter table public.lt_students enable row level security;
+create policy "anon read"   on public.lt_students for select to anon using (true);
+create policy "anon insert" on public.lt_students for insert to anon with check (true);
+create policy "anon update" on public.lt_students for update to anon using (true) with check (true);
+
+-- Live-Updates aktivieren:
+alter publication supabase_realtime add table public.lt_students;</code></pre>
+        <p style="font-size:0.84rem;line-height:1.6;color:#fde68a;">
+          Hinweis Datenschutz: Mit diesen offenen Regeln kann jede Person mit Klassencode + öffentlichem
+          anon-Key die Klassendaten lesen/schreiben. Nutze nur Vornamen/Spitznamen und keine sensiblen Daten.
+        </p>
+      </details>
+
+      <p class="foot">
+        Schüler treten in der App über „🎓 Klasse beitreten" (⋮-Menü) mit diesem Code bei.
+        Der Fortschritt erscheint hier automatisch (Live) bzw. beim Aktualisieren.
+      </p>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="classroom.js"></script>
+  <script src="game_touchtyping.js"></script>
+  <script>
+    /* ── ⋮ menu + teacher dashboard (merged from teacher.html) ── */
+    (function () {
+      'use strict';
+      const $ = (id) => document.getElementById(id);
+      const topMenu = $('topMenu'), menuBtn = $('menuBtn'), appMenu = $('appMenu');
+      const teacherView = $('teacher-view');
+
+      function closeMenu() { appMenu.classList.remove('open'); }
+      menuBtn.addEventListener('click', (e) => { e.stopPropagation(); appMenu.classList.toggle('open'); });
+      document.addEventListener('click', (e) => { if (!topMenu.contains(e.target)) closeMenu(); });
+
+      $('mi-class').addEventListener('click', () => { closeMenu(); if (window.App && App.openClassModal) App.openClassModal(); });
+      $('mi-teacher').addEventListener('click', () => { closeMenu(); openTeacher(); });
+      $('teacher-back').addEventListener('click', () => { teacherView.style.display = 'none'; });
+
+      let inited = false;
+      function openTeacher() {
+        teacherView.style.display = 'block';
+        teacherView.scrollTop = 0;
+        if (!inited) { inited = true; initTeacher(); }
+      }
+
+      function initTeacher() {
+        const cfgBanner = $('cfg-banner');
+        const client = window.Classroom && window.Classroom.client;
+        const TABLE = (window.Classroom && window.Classroom.TABLE) || 'lt_students';
+
+        if (!window.Classroom || !window.Classroom.configured) {
+          cfgBanner.className = 'banner warn';
+          cfgBanner.innerHTML = 'Noch nicht eingerichtet: Trage deine Supabase-Daten in <code>supabase-config.js</code> ein und führe das SQL unter „Einrichtung" aus. Danach Seite neu laden.';
+        } else if (!client) {
+          cfgBanner.className = 'banner warn';
+          cfgBanner.textContent = 'Supabase-Bibliothek konnte nicht geladen werden (Internetverbindung nötig).';
+        } else {
+          cfgBanner.className = 'banner ok';
+          cfgBanner.textContent = 'Mit Supabase verbunden. Gib einen Klassencode ein und teile ihn mit deiner Klasse.';
+        }
+
+        let currentCode = null, channel = null, pollTimer = null;
+
+        function genCode() {
+          const A = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+          let c = ''; for (let i = 0; i < 5; i++) c += A[Math.floor(Math.random() * A.length)];
+          return c;
+        }
+        function relTime(iso) {
+          if (!iso) return '–';
+          const s = Math.max(0, Math.floor((Date.now() - new Date(iso).getTime()) / 1000));
+          if (s < 60) return 'gerade eben';
+          if (s < 3600) return Math.floor(s / 60) + ' Min';
+          if (s < 86400) return Math.floor(s / 3600) + ' Std';
+          return Math.floor(s / 86400) + ' T';
+        }
+        function accClass(a) { return a >= 90 ? 'acc-good' : (a >= 80 ? 'acc-mid' : 'acc-low'); }
+        function esc(s) {
+          return String(s == null ? '' : s).replace(/[&<>"']/g, c =>
+            ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+        }
+        function render(rows) {
+          rows = rows || [];
+          rows.sort((a, b) => (b.levels_passed - a.levels_passed) || String(a.name).localeCompare(b.name));
+          const tbl = $('tbl'), cards = $('cards'), empty = $('emptyState');
+          if (!rows.length) { tbl.style.display = 'none'; cards.style.display = 'none'; empty.style.display = 'block'; return; }
+          cards.style.display = 'grid'; tbl.style.display = 'table'; empty.style.display = 'none';
+          const now = Date.now();
+          const active = rows.filter(r => r.updated_at && (now - new Date(r.updated_at).getTime()) < 5 * 60 * 1000).length;
+          const avgLv = Math.round(rows.reduce((s, r) => s + (r.levels_passed || 0), 0) / rows.length);
+          const accs = rows.filter(r => (r.accuracy || 0) > 0).map(r => r.accuracy);
+          const avgAcc = accs.length ? Math.round(accs.reduce((s, a) => s + a, 0) / accs.length) : null;
+          $('cStudents').textContent = rows.length;
+          $('cAvgLevels').textContent = avgLv;
+          $('cAvgAcc').textContent = avgAcc == null ? '–' : (avgAcc + '%');
+          $('cActive').textContent = active;
+          $('rows').innerHTML = rows.map(r => {
+            const total = r.total_levels || 33;
+            const pct = total ? Math.round((r.levels_passed || 0) / total * 100) : 0;
+            const acc = r.accuracy || 0;
+            return '<tr><td class="name">' + esc(r.name) + '</td><td>' + (r.current_lesson || 1) + '</td>' +
+              '<td class="muted">' + (r.current_lesson || 1) + '.' + (r.current_level || 1) + '</td>' +
+              '<td><div style="display:flex;align-items:center;gap:8px;"><div class="bar"><span style="width:' + pct + '%"></span></div>' +
+              '<span class="muted">' + (r.levels_passed || 0) + '/' + total + '</span></div></td>' +
+              '<td class="' + accClass(acc) + '">' + (acc ? acc + '%' : '–') + '</td>' +
+              '<td class="muted">' + relTime(r.updated_at) + '</td></tr>';
+          }).join('');
+        }
+        async function fetchRows() {
+          if (!client || !currentCode) return;
+          const { data, error } = await client.from(TABLE).select('*')
+            .eq('class_code', currentCode).order('updated_at', { ascending: false });
+          if (!error) render(data);
+        }
+        async function watch(code) {
+          if (!client) return;
+          currentCode = window.Classroom.normCode(code);
+          if (!currentCode) return;
+          $('liveInfo').innerHTML = 'Beobachte Klasse: <span class="codepill">' + esc(currentCode) + '</span>';
+          await fetchRows();
+          if (channel) { try { client.removeChannel(channel); } catch (e) {} channel = null; }
+          try {
+            channel = client.channel('lt-' + currentCode)
+              .on('postgres_changes', { event: '*', schema: 'public', table: TABLE, filter: 'class_code=eq.' + currentCode }, () => fetchRows())
+              .subscribe();
+          } catch (e) {}
+          if (pollTimer) clearInterval(pollTimer);
+          pollTimer = setInterval(fetchRows, 15000);
+          try { localStorage.setItem('lt_teacher_code', currentCode); } catch (e) {}
+        }
+        $('watchBtn').addEventListener('click', () => { const c = $('code').value; if (c.trim()) watch(c); });
+        $('code').addEventListener('keydown', (e) => { if (e.key === 'Enter') $('watchBtn').click(); });
+        $('genBtn').addEventListener('click', () => { $('code').value = genCode(); });
+        $('refreshBtn').addEventListener('click', fetchRows);
+        try { const last = localStorage.getItem('lt_teacher_code'); if (last && client) { $('code').value = last; watch(last); } } catch (e) {}
+      }
+    })();
+  </script>
 </body>
 </html>

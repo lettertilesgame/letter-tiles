@@ -58,6 +58,18 @@ const introText = document.getElementById('intro-text');
 const introStartBtn = document.getElementById('intro-start');
 const introBackBtn = document.getElementById('intro-back');
 
+// Classroom (student join) elements
+const classBtn = document.getElementById('classBtn');
+const classOverlay = document.getElementById('class-overlay');
+const classTippy = document.getElementById('class-tippy');
+const classTitle = document.getElementById('class-title');
+const classCodeInput = document.getElementById('class-code-input');
+const classNameInput = document.getElementById('class-name-input');
+const classMsg = document.getElementById('class-msg');
+const classJoinBtn = document.getElementById('class-join');
+const classLeaveBtn = document.getElementById('class-leave');
+const classCloseBtn = document.getElementById('class-close');
+
 // Optional hint
 const hintEl = document.getElementById('hint');
 
@@ -342,53 +354,53 @@ const ALL26 = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','
 // Duolingo-style curriculum: lessons (Lektionen) each containing several levels.
 const FALLBACK_LESSONS = [
   { id:'LE1_GRUNDSTELLUNG', title:'Grundstellung', subtitle:'Die Heimatreihe deiner Finger', color:'#ffc800', levels:[
-    { id:'L1_1', title:'Zeigefinger: F J', intro:'Lege die Zeigefinger auf F und J – an den kleinen Erhebungen findest du blind zurück.', allowedLetters:['F','J'], exercise:{type:'letters',minLen:1,maxLen:1}, rules:{durationSeconds:25,minKeystrokes:10,minAccuracy:0.90}, difficulty:{spawnRate:0.010,speed:0.85}, lives:3 },
-    { id:'L1_2', title:'Mittelfinger: D K', intro:'Die Mittelfinger kommen dazu: D und K. Finger ruhen auf der Grundreihe.', allowedLetters:['F','J','D','K'], exercise:{type:'letters',minLen:1,maxLen:1}, rules:{durationSeconds:25,minKeystrokes:10,minAccuracy:0.90}, difficulty:{spawnRate:0.011,speed:0.88}, lives:3 },
-    { id:'L1_3', title:'Ringfinger: S L', intro:'Die Ringfinger: S und L. Nur den Finger bewegen, nicht die Hand.', allowedLetters:['S','D','F','J','K','L'], exercise:{type:'letters',minLen:1,maxLen:1}, rules:{durationSeconds:28,minKeystrokes:10,minAccuracy:0.90}, difficulty:{spawnRate:0.011,speed:0.90}, lives:3 },
-    { id:'L1_4', title:'Kleiner Finger: A', intro:'Der kleine Finger der linken Hand: A. Damit liegen alle Anker.', allowedLetters:HOME7, exercise:{type:'letters',minLen:1,maxLen:1}, rules:{durationSeconds:28,minKeystrokes:10,minAccuracy:0.90}, difficulty:{spawnRate:0.011,speed:0.92}, lives:3 },
-    { id:'L1_5', title:'Grundreihe-Mix', intro:'Erste Kombinationen aus der Grundreihe. Gleichmäßig statt schnell.', allowedLetters:HOME7, exercise:{type:'letters',minLen:2,maxLen:3}, rules:{durationSeconds:35,minKeystrokes:30,minAccuracy:0.88}, difficulty:{spawnRate:0.011,speed:1.0}, lives:3 }
+    { id:'L1_1', title:'Zeigefinger: F J', intro:'Lege die Zeigefinger auf F und J – an den kleinen Erhebungen findest du blind zurück.', allowedLetters:['F','J'], exercise:{type:'letters',minLen:1,maxLen:1}, rules:{durationSeconds:80,minKeystrokes:25,minAccuracy:0.86}, difficulty:{spawnRate:0.01,speed:0.9}, lives:3 },
+    { id:'L1_2', title:'Mittelfinger: D K', intro:'Die Mittelfinger kommen dazu: D und K. Finger ruhen auf der Grundreihe.', allowedLetters:['F','J','D','K'], exercise:{type:'letters',minLen:1,maxLen:1}, rules:{durationSeconds:80,minKeystrokes:25,minAccuracy:0.86}, difficulty:{spawnRate:0.0103,speed:0.92}, lives:3 },
+    { id:'L1_3', title:'Ringfinger: S L', intro:'Die Ringfinger: S und L. Nur den Finger bewegen, nicht die Hand.', allowedLetters:['S','D','F','J','K','L'], exercise:{type:'letters',minLen:1,maxLen:1}, rules:{durationSeconds:85,minKeystrokes:30,minAccuracy:0.86}, difficulty:{spawnRate:0.0105,speed:0.94}, lives:3 },
+    { id:'L1_4', title:'Kleiner Finger: A', intro:'Der kleine Finger der linken Hand: A. Damit liegen alle Anker.', allowedLetters:HOME7, exercise:{type:'letters',minLen:1,maxLen:1}, rules:{durationSeconds:90,minKeystrokes:30,minAccuracy:0.86}, difficulty:{spawnRate:0.0108,speed:0.96}, lives:3 },
+    { id:'L1_5', title:'Grundreihe-Mix', intro:'Erste Kombinationen aus der Grundreihe. Gleichmäßig statt schnell.', allowedLetters:HOME7, exercise:{type:'letters',minLen:2,maxLen:3}, rules:{durationSeconds:95,minKeystrokes:85,minAccuracy:0.86}, difficulty:{spawnRate:0.011,speed:0.98}, lives:3 }
   ]},
   { id:'LE2_GRUNDREIHE', title:'Grundreihe komplett', subtitle:'G, H und erste Kombinationen', color:'#58cc02', levels:[
-    { id:'L2_1', title:'Mitte: G H', intro:'Die Zeigefinger strecken sich zur Mitte: G und H. Danach zurück zur Grundstellung.', allowedLetters:HOME9, exercise:{type:'letters',minLen:1,maxLen:1}, rules:{durationSeconds:28,minKeystrokes:10,minAccuracy:0.89}, difficulty:{spawnRate:0.012,speed:0.95}, lives:3 },
-    { id:'L2_2', title:'Kurze Kombis', intro:'Zwei-Buchstaben-Folgen aus der kompletten Grundreihe.', allowedLetters:HOME9, exercise:{type:'letters',minLen:2,maxLen:2}, rules:{durationSeconds:32,minKeystrokes:25,minAccuracy:0.88}, difficulty:{spawnRate:0.012,speed:1.0}, lives:3 },
-    { id:'L2_3', title:'Längere Folgen', intro:'Längere Sequenzen für mehr Routine in den Fingern.', allowedLetters:HOME9, exercise:{type:'letters',minLen:2,maxLen:4}, rules:{durationSeconds:38,minKeystrokes:45,minAccuracy:0.87}, difficulty:{spawnRate:0.012,speed:1.05}, lives:3 },
-    { id:'L2_4', title:'Grundreihe-Wörter', intro:'Echte Wörter nur aus der Grundreihe. Tippe sie als Einheit.', allowedLetters:HOME9, exercise:{type:'words',words:['DAS','FALL','HALL','GLAS','HALS','SAAL','GAS','LAG','SAG','HAG']}, rules:{durationSeconds:40,minKeystrokes:50,minAccuracy:0.87}, difficulty:{spawnRate:0.011,speed:1.0}, lives:3 }
+    { id:'L2_1', title:'Mitte: G H', intro:'Die Zeigefinger strecken sich zur Mitte: G und H. Danach zurück zur Grundstellung.', allowedLetters:HOME9, exercise:{type:'letters',minLen:1,maxLen:1}, rules:{durationSeconds:100,minKeystrokes:35,minAccuracy:0.87}, difficulty:{spawnRate:0.0112,speed:1.0}, lives:3 },
+    { id:'L2_2', title:'Kurze Kombis', intro:'Zwei-Buchstaben-Folgen aus der kompletten Grundreihe.', allowedLetters:HOME9, exercise:{type:'letters',minLen:2,maxLen:2}, rules:{durationSeconds:105,minKeystrokes:80,minAccuracy:0.87}, difficulty:{spawnRate:0.0115,speed:1.02}, lives:3 },
+    { id:'L2_3', title:'Längere Folgen', intro:'Längere Sequenzen für mehr Routine in den Fingern.', allowedLetters:HOME9, exercise:{type:'letters',minLen:2,maxLen:4}, rules:{durationSeconds:110,minKeystrokes:130,minAccuracy:0.87}, difficulty:{spawnRate:0.0118,speed:1.04}, lives:3 },
+    { id:'L2_4', title:'Grundreihe-Wörter', intro:'Echte Wörter nur aus der Grundreihe. Tippe sie als Einheit.', allowedLetters:HOME9, exercise:{type:'words',words:['DAS','FALL','HALL','GLAS','HALS','SAAL','GAS','LAG','SAG','HAG']}, rules:{durationSeconds:115,minKeystrokes:115,minAccuracy:0.87}, difficulty:{spawnRate:0.0086,speed:1.05}, lives:3 }
   ]},
   { id:'LE3_OBEN_I', title:'Obere Reihe I', subtitle:'E I R U – Mittel- und Zeigefinger hoch', color:'#13c1b6', levels:[
-    { id:'L3_1', title:'Mittelfinger hoch: E I', intro:'Obere Reihe, Mittelfinger nach oben: E (links) und I (rechts).', allowedLetters:['A','S','D','F','G','H','J','K','L','E','I'], exercise:{type:'letters',minLen:1,maxLen:2}, rules:{durationSeconds:30,minKeystrokes:20,minAccuracy:0.88}, difficulty:{spawnRate:0.012,speed:1.0}, lives:3 },
-    { id:'L3_2', title:'Zeigefinger hoch: R U', intro:'Zeigefinger nach oben: R und U. Achte auf die schräge Bewegung.', allowedLetters:OBEN1, exercise:{type:'letters',minLen:1,maxLen:2}, rules:{durationSeconds:30,minKeystrokes:20,minAccuracy:0.88}, difficulty:{spawnRate:0.012,speed:1.05}, lives:3 },
-    { id:'L3_3', title:'EIRU im Mix', intro:'Grundreihe und neue Buchstaben gemischt.', allowedLetters:OBEN1, exercise:{type:'letters',minLen:2,maxLen:3}, rules:{durationSeconds:36,minKeystrokes:40,minAccuracy:0.87}, difficulty:{spawnRate:0.013,speed:1.10}, lives:3 },
-    { id:'L3_4', title:'Erste Wörter', intro:'Deine ersten echten Wörter mit E, I, R, U.', allowedLetters:OBEN1, exercise:{type:'words',words:['DIE','DER','DREI','FREI','HIER','RUF','REIS','LEER','EILE','REIHE','FEIER','RUHE']}, rules:{durationSeconds:40,minKeystrokes:60,minAccuracy:0.86}, difficulty:{spawnRate:0.012,speed:1.05}, lives:3 }
+    { id:'L3_1', title:'Mittelfinger hoch: E I', intro:'Obere Reihe, Mittelfinger nach oben: E (links) und I (rechts).', allowedLetters:['A','S','D','F','G','H','J','K','L','E','I'], exercise:{type:'letters',minLen:1,maxLen:2}, rules:{durationSeconds:120,minKeystrokes:75,minAccuracy:0.87}, difficulty:{spawnRate:0.0123,speed:1.07}, lives:3 },
+    { id:'L3_2', title:'Zeigefinger hoch: R U', intro:'Zeigefinger nach oben: R und U. Achte auf die schräge Bewegung.', allowedLetters:OBEN1, exercise:{type:'letters',minLen:1,maxLen:2}, rules:{durationSeconds:120,minKeystrokes:75,minAccuracy:0.87}, difficulty:{spawnRate:0.0125,speed:1.09}, lives:3 },
+    { id:'L3_3', title:'EIRU im Mix', intro:'Grundreihe und neue Buchstaben gemischt.', allowedLetters:OBEN1, exercise:{type:'letters',minLen:2,maxLen:3}, rules:{durationSeconds:125,minKeystrokes:130,minAccuracy:0.87}, difficulty:{spawnRate:0.0128,speed:1.11}, lives:3 },
+    { id:'L3_4', title:'Erste Wörter', intro:'Deine ersten echten Wörter mit E, I, R, U.', allowedLetters:OBEN1, exercise:{type:'words',words:['DIE','DER','DREI','FREI','HIER','RUF','REIS','LEER','EILE','REIHE','FEIER','RUHE']}, rules:{durationSeconds:130,minKeystrokes:160,minAccuracy:0.88}, difficulty:{spawnRate:0.0094,speed:1.13}, lives:3 }
   ]},
   { id:'LE4_OBEN_II', title:'Obere Reihe II', subtitle:'T Z W O Q P – obere Reihe komplett', color:'#2b8cff', levels:[
-    { id:'L4_1', title:'T Z', intro:'Zeigefinger-Dehnung nach oben innen: T und Z.', allowedLetters:['A','S','D','F','G','H','J','K','L','E','I','R','U','T','Z'], exercise:{type:'letters',minLen:1,maxLen:2}, rules:{durationSeconds:30,minKeystrokes:20,minAccuracy:0.87}, difficulty:{spawnRate:0.013,speed:1.10}, lives:3 },
-    { id:'L4_2', title:'W O', intro:'Ringfinger nach oben: W und O.', allowedLetters:['A','S','D','F','G','H','J','K','L','E','I','R','U','T','Z','W','O'], exercise:{type:'letters',minLen:1,maxLen:2}, rules:{durationSeconds:30,minKeystrokes:20,minAccuracy:0.87}, difficulty:{spawnRate:0.013,speed:1.10}, lives:3 },
-    { id:'L4_3', title:'Q P', intro:'Kleine Finger nach oben: Q und P.', allowedLetters:OBEN2, exercise:{type:'letters',minLen:1,maxLen:3}, rules:{durationSeconds:32,minKeystrokes:25,minAccuracy:0.86}, difficulty:{spawnRate:0.013,speed:1.10}, lives:3 },
-    { id:'L4_4', title:'Obere Reihe komplett', intro:'Die gesamte obere Reihe im Zusammenspiel mit der Grundreihe.', allowedLetters:TOP_HOME, exercise:{type:'letters',minLen:2,maxLen:4}, rules:{durationSeconds:40,minKeystrokes:50,minAccuracy:0.86}, difficulty:{spawnRate:0.013,speed:1.20}, lives:3 }
+    { id:'L4_1', title:'T Z', intro:'Zeigefinger-Dehnung nach oben innen: T und Z.', allowedLetters:['A','S','D','F','G','H','J','K','L','E','I','R','U','T','Z'], exercise:{type:'letters',minLen:1,maxLen:2}, rules:{durationSeconds:135,minKeystrokes:90,minAccuracy:0.88}, difficulty:{spawnRate:0.0133,speed:1.15}, lives:3 },
+    { id:'L4_2', title:'W O', intro:'Ringfinger nach oben: W und O.', allowedLetters:['A','S','D','F','G','H','J','K','L','E','I','R','U','T','Z','W','O'], exercise:{type:'letters',minLen:1,maxLen:2}, rules:{durationSeconds:140,minKeystrokes:95,minAccuracy:0.88}, difficulty:{spawnRate:0.0135,speed:1.17}, lives:3 },
+    { id:'L4_3', title:'Q P', intro:'Kleine Finger nach oben: Q und P.', allowedLetters:OBEN2, exercise:{type:'letters',minLen:1,maxLen:3}, rules:{durationSeconds:145,minKeystrokes:130,minAccuracy:0.88}, difficulty:{spawnRate:0.0138,speed:1.19}, lives:3 },
+    { id:'L4_4', title:'Obere Reihe komplett', intro:'Die gesamte obere Reihe im Zusammenspiel mit der Grundreihe.', allowedLetters:TOP_HOME, exercise:{type:'letters',minLen:2,maxLen:4}, rules:{durationSeconds:150,minKeystrokes:210,minAccuracy:0.88}, difficulty:{spawnRate:0.014,speed:1.21}, lives:3 }
   ]},
   { id:'LE5_UNTEN_I', title:'Untere Reihe I', subtitle:'C M V N – Finger nach unten', color:'#a560f0', levels:[
-    { id:'L5_1', title:'C M', intro:'Untere Reihe, Mittelfinger nach unten: C und M.', allowedLetters:TOP_HOME.concat(['C','M']), exercise:{type:'letters',minLen:1,maxLen:2}, rules:{durationSeconds:30,minKeystrokes:20,minAccuracy:0.87}, difficulty:{spawnRate:0.013,speed:1.10}, lives:3 },
-    { id:'L5_2', title:'V N', intro:'Zeigefinger nach unten: V und N.', allowedLetters:UNTEN1, exercise:{type:'letters',minLen:1,maxLen:2}, rules:{durationSeconds:30,minKeystrokes:20,minAccuracy:0.87}, difficulty:{spawnRate:0.013,speed:1.15}, lives:3 },
-    { id:'L5_3', title:'Untere Reihe im Mix', intro:'Neue untere Buchstaben gemischt mit dem Rest.', allowedLetters:UNTEN1, exercise:{type:'letters',minLen:2,maxLen:3}, rules:{durationSeconds:36,minKeystrokes:40,minAccuracy:0.86}, difficulty:{spawnRate:0.014,speed:1.15}, lives:3 },
-    { id:'L5_4', title:'Wörter', intro:'Wörter mit M, N, V und C.', allowedLetters:UNTEN1, exercise:{type:'words',words:['MEIN','NEIN','NAME','MANN','KOMM','WIND','MOND','WEIN','NEUN','MINE','KANN','DENN','WANN']}, rules:{durationSeconds:40,minKeystrokes:70,minAccuracy:0.85}, difficulty:{spawnRate:0.013,speed:1.10}, lives:3 }
+    { id:'L5_1', title:'C M', intro:'Untere Reihe, Mittelfinger nach unten: C und M.', allowedLetters:TOP_HOME.concat(['C','M']), exercise:{type:'letters',minLen:1,maxLen:2}, rules:{durationSeconds:155,minKeystrokes:110,minAccuracy:0.88}, difficulty:{spawnRate:0.0143,speed:1.23}, lives:3 },
+    { id:'L5_2', title:'V N', intro:'Zeigefinger nach unten: V und N.', allowedLetters:UNTEN1, exercise:{type:'letters',minLen:1,maxLen:2}, rules:{durationSeconds:155,minKeystrokes:110,minAccuracy:0.88}, difficulty:{spawnRate:0.0145,speed:1.25}, lives:3 },
+    { id:'L5_3', title:'Untere Reihe im Mix', intro:'Neue untere Buchstaben gemischt mit dem Rest.', allowedLetters:UNTEN1, exercise:{type:'letters',minLen:2,maxLen:3}, rules:{durationSeconds:160,minKeystrokes:195,minAccuracy:0.88}, difficulty:{spawnRate:0.0147,speed:1.27}, lives:3 },
+    { id:'L5_4', title:'Wörter', intro:'Wörter mit M, N, V und C.', allowedLetters:UNTEN1, exercise:{type:'words',words:['MEIN','NEIN','NAME','MANN','KOMM','WIND','MOND','WEIN','NEUN','MINE','KANN','DENN','WANN']}, rules:{durationSeconds:165,minKeystrokes:235,minAccuracy:0.89}, difficulty:{spawnRate:0.0108,speed:1.29}, lives:3 }
   ]},
   { id:'LE6_UNTEN_II', title:'Untere Reihe II', subtitle:'B X Y – untere Reihe komplett', color:'#ff5fa2', levels:[
-    { id:'L6_1', title:'B', intro:'Zeigefinger-Dehnung nach unten: B.', allowedLetters:TOP_HOME.concat(['C','M','V','N','B']), exercise:{type:'letters',minLen:1,maxLen:3}, rules:{durationSeconds:30,minKeystrokes:30,minAccuracy:0.86}, difficulty:{spawnRate:0.014,speed:1.15}, lives:3 },
-    { id:'L6_2', title:'X Y', intro:'Ring- und kleiner Finger nach unten: X und Y.', allowedLetters:UNTEN2, exercise:{type:'letters',minLen:1,maxLen:3}, rules:{durationSeconds:30,minKeystrokes:30,minAccuracy:0.86}, difficulty:{spawnRate:0.014,speed:1.20}, lives:3 },
-    { id:'L6_3', title:'Untere Reihe komplett', intro:'Die komplette untere Reihe Y X C V B N M mit der Grundstellung.', allowedLetters:['Y','X','C','V','B','N','M','A','S','D','F','G','H','J','K','L'], exercise:{type:'letters',minLen:2,maxLen:3}, rules:{durationSeconds:38,minKeystrokes:45,minAccuracy:0.86}, difficulty:{spawnRate:0.014,speed:1.20}, lives:3 },
-    { id:'L6_4', title:'Alles gemischt', intro:'Erstmals alle drei Reihen zusammen.', allowedLetters:ALL26, exercise:{type:'letters',minLen:2,maxLen:4}, rules:{durationSeconds:42,minKeystrokes:60,minAccuracy:0.85}, difficulty:{spawnRate:0.014,speed:1.25}, lives:3 }
+    { id:'L6_1', title:'B', intro:'Zeigefinger-Dehnung nach unten: B.', allowedLetters:TOP_HOME.concat(['C','M','V','N','B']), exercise:{type:'letters',minLen:1,maxLen:3}, rules:{durationSeconds:170,minKeystrokes:170,minAccuracy:0.89}, difficulty:{spawnRate:0.0152,speed:1.31}, lives:3 },
+    { id:'L6_2', title:'X Y', intro:'Ring- und kleiner Finger nach unten: X und Y.', allowedLetters:UNTEN2, exercise:{type:'letters',minLen:1,maxLen:3}, rules:{durationSeconds:175,minKeystrokes:180,minAccuracy:0.89}, difficulty:{spawnRate:0.0155,speed:1.33}, lives:3 },
+    { id:'L6_3', title:'Untere Reihe komplett', intro:'Die komplette untere Reihe Y X C V B N M mit der Grundstellung.', allowedLetters:['Y','X','C','V','B','N','M','A','S','D','F','G','H','J','K','L'], exercise:{type:'letters',minLen:2,maxLen:3}, rules:{durationSeconds:180,minKeystrokes:235,minAccuracy:0.89}, difficulty:{spawnRate:0.0158,speed:1.35}, lives:3 },
+    { id:'L6_4', title:'Alles gemischt', intro:'Erstmals alle drei Reihen zusammen.', allowedLetters:ALL26, exercise:{type:'letters',minLen:2,maxLen:4}, rules:{durationSeconds:185,minKeystrokes:295,minAccuracy:0.89}, difficulty:{spawnRate:0.016,speed:1.36}, lives:3 }
   ]},
   { id:'LE7_ALPHABET', title:'Das ganze Alphabet', subtitle:'Alle Buchstaben im Zusammenspiel', color:'#ff9600', levels:[
-    { id:'L7_1', title:'Alphabet kurz', intro:'Alle Buchstaben in kurzen, zufälligen Folgen.', allowedLetters:ALL26, exercise:{type:'letters',minLen:2,maxLen:3}, rules:{durationSeconds:40,minKeystrokes:45,minAccuracy:0.85}, difficulty:{spawnRate:0.014,speed:1.25}, lives:3 },
-    { id:'L7_2', title:'Bigramme', intro:'Häufige Buchstabenpaare wie EN, ER, CH – die Bausteine echter Wörter.', allowedLetters:ALL26, exercise:{type:'words',words:['EN','ER','CH','DE','IE','ND','TE','EI','IN','ES','UN','ST','GE','BE','SE','RE','AN','DA','IS','CK']}, rules:{durationSeconds:40,minKeystrokes:30,minAccuracy:0.86}, difficulty:{spawnRate:0.012,speed:1.15}, lives:3 },
-    { id:'L7_3', title:'Alphabet flott', intro:'Einzelne Buchstaben, aber schneller und dichter.', allowedLetters:ALL26, exercise:{type:'letters',minLen:1,maxLen:2}, rules:{durationSeconds:40,minKeystrokes:30,minAccuracy:0.86}, difficulty:{spawnRate:0.016,speed:1.35}, lives:3 },
-    { id:'L7_4', title:'Alphabet-Challenge', intro:'Längere Folgen bei höherem Tempo.', allowedLetters:ALL26, exercise:{type:'letters',minLen:2,maxLen:4}, rules:{durationSeconds:45,minKeystrokes:65,minAccuracy:0.85}, difficulty:{spawnRate:0.015,speed:1.35}, lives:3 }
+    { id:'L7_1', title:'Alphabet kurz', intro:'Alle Buchstaben in kurzen, zufälligen Folgen.', allowedLetters:ALL26, exercise:{type:'letters',minLen:2,maxLen:3}, rules:{durationSeconds:190,minKeystrokes:255,minAccuracy:0.89}, difficulty:{spawnRate:0.0163,speed:1.38}, lives:3 },
+    { id:'L7_2', title:'Bigramme', intro:'Häufige Buchstabenpaare wie EN, ER, CH – die Bausteine echter Wörter.', allowedLetters:ALL26, exercise:{type:'words',words:['EN','ER','CH','DE','IE','ND','TE','EI','IN','ES','UN','ST','GE','BE','SE','RE','AN','DA','IS','CK']}, rules:{durationSeconds:190,minKeystrokes:150,minAccuracy:0.89}, difficulty:{spawnRate:0.0119,speed:1.4}, lives:3 },
+    { id:'L7_3', title:'Alphabet flott', intro:'Einzelne Buchstaben, aber schneller und dichter.', allowedLetters:ALL26, exercise:{type:'letters',minLen:1,maxLen:2}, rules:{durationSeconds:195,minKeystrokes:160,minAccuracy:0.89}, difficulty:{spawnRate:0.0168,speed:1.42}, lives:3 },
+    { id:'L7_4', title:'Alphabet-Challenge', intro:'Längere Folgen bei höherem Tempo.', allowedLetters:ALL26, exercise:{type:'letters',minLen:2,maxLen:4}, rules:{durationSeconds:200,minKeystrokes:335,minAccuracy:0.9}, difficulty:{spawnRate:0.017,speed:1.44}, lives:3 }
   ]},
   { id:'LE8_WOERTER', title:'Wörter & Tempo', subtitle:'Echte Wörter und Geschwindigkeit', color:'#ff4b4b', levels:[
-    { id:'L8_1', title:'Kurze Wörter', intro:'Kurze, häufige Wörter. Tippe sie als Einheit, nicht Buchstabe für Buchstabe.', allowedLetters:ALL26, exercise:{type:'words',words:['UND','DER','DIE','DAS','IST','EIN','MIT','ICH','DEN','VON','BEI','AUS','NUR','WIR','HAT','WAR','WIE','WAS','HER','MAN','DOCH','AUCH','NOCH','DANN']}, rules:{durationSeconds:45,minKeystrokes:50,minAccuracy:0.86}, difficulty:{spawnRate:0.011,speed:1.10}, lives:3 },
-    { id:'L8_2', title:'Mittlere Wörter', intro:'Mittellange Wörter. Achte auf gleichmäßigen Rhythmus über das ganze Wort.', allowedLetters:ALL26, exercise:{type:'words',words:['HAUS','BAUM','HAND','KIND','BUCH','BLUME','SONNE','TISCH','STUHL','WASSER','GARTEN','FENSTER','MORGEN','ABEND','LICHT','WELT','ZEIT','JAHR','SPIEL','KATZE','HUND','VOGEL','STRAND','WOLKE']}, rules:{durationSeconds:50,minKeystrokes:80,minAccuracy:0.85}, difficulty:{spawnRate:0.010,speed:1.05}, lives:4 },
-    { id:'L8_3', title:'Lange Wörter', intro:'Lange Wörter als Herausforderung. Ruhig bleiben und sauber zu Ende tippen.', allowedLetters:ALL26, exercise:{type:'words',words:['COMPUTER','TASTATUR','PROGRAMM','FREUNDE','SCHULE','ARBEIT','FAMILIE','WETTER','STRASSE','BAHNHOF','KUCHEN','SOMMER','WINTER','FRUEHLING','HERBST','URLAUB','NATUR','MASCHINE','GESCHENK','FREIHEIT','GEDANKE','ZUKUNFT']}, rules:{durationSeconds:55,minKeystrokes:115,minAccuracy:0.85}, difficulty:{spawnRate:0.009,speed:1.0}, lives:4 },
-    { id:'L8_4', title:'Speed-Finale', intro:'Geschwindigkeits-Finale: alle Buchstaben, schnelle Anschläge, 5 Leben. Zeig, was du kannst!', allowedLetters:ALL26, exercise:{type:'letters',minLen:1,maxLen:2}, rules:{durationSeconds:55,minKeystrokes:50,minAccuracy:0.88}, difficulty:{spawnRate:0.018,speed:1.50}, lives:5 }
+    { id:'L8_1', title:'Kurze Wörter', intro:'Kurze, häufige Wörter. Tippe sie als Einheit, nicht Buchstabe für Buchstabe.', allowedLetters:ALL26, exercise:{type:'words',words:['UND','DER','DIE','DAS','IST','EIN','MIT','ICH','DEN','VON','BEI','AUS','NUR','WIR','HAT','WAR','WIE','WAS','HER','MAN','DOCH','AUCH','NOCH','DANN']}, rules:{durationSeconds:205,minKeystrokes:265,minAccuracy:0.9}, difficulty:{spawnRate:0.0124,speed:1.46}, lives:3 },
+    { id:'L8_2', title:'Mittlere Wörter', intro:'Mittellange Wörter. Achte auf gleichmäßigen Rhythmus über das ganze Wort.', allowedLetters:ALL26, exercise:{type:'words',words:['HAUS','BAUM','HAND','KIND','BUCH','BLUME','SONNE','TISCH','STUHL','WASSER','GARTEN','FENSTER','MORGEN','ABEND','LICHT','WELT','ZEIT','JAHR','SPIEL','KATZE','HUND','VOGEL','STRAND','WOLKE']}, rules:{durationSeconds:210,minKeystrokes:425,minAccuracy:0.9}, difficulty:{spawnRate:0.0126,speed:1.48}, lives:4 },
+    { id:'L8_3', title:'Lange Wörter', intro:'Lange Wörter als Herausforderung. Ruhig bleiben und sauber zu Ende tippen.', allowedLetters:ALL26, exercise:{type:'words',words:['COMPUTER','TASTATUR','PROGRAMM','FREUNDE','SCHULE','ARBEIT','FAMILIE','WETTER','STRASSE','BAHNHOF','KUCHEN','SOMMER','WINTER','FRUEHLING','HERBST','URLAUB','NATUR','MASCHINE','GESCHENK','FREIHEIT','GEDANKE','ZUKUNFT']}, rules:{durationSeconds:215,minKeystrokes:625,minAccuracy:0.9}, difficulty:{spawnRate:0.0128,speed:1.5}, lives:4 },
+    { id:'L8_4', title:'Speed-Finale', intro:'Geschwindigkeits-Finale: alle Buchstaben, schnelle Anschläge, 5 Leben. Zeig, was du kannst!', allowedLetters:ALL26, exercise:{type:'letters',minLen:1,maxLen:2}, rules:{durationSeconds:220,minKeystrokes:195,minAccuracy:0.9}, difficulty:{spawnRate:0.018,speed:1.52}, lives:5 }
   ]}
 ];
 
@@ -1196,18 +1208,8 @@ class LearningMode {
 
     if (passed) playLevelUpSound(); else playGameOverSound();
 
-    // Supabase: Fortschritt speichern
-    if (typeof ltSaveProgress === 'function') {
-      const elapsed = (performance.now() - this.startTimeMs) / 1000;
-      ltSaveProgress({
-        lessonIndex:     this.activeLevel._lessonIndex ?? 0,
-        levelIndex:      this.activeIndex,
-        accuracy:        this.engine.getAccuracy(),
-        keystrokes:      this.engine.totalKeystrokes,
-        durationSeconds: elapsed,
-        passed:          passed
-      });
-    }
+    // Sync progress to the teacher dashboard (no-op if not in a class)
+    App.pushProgress();
 
     this.engine.beginTransition();
     this.engine.endTransition();
@@ -1254,11 +1256,11 @@ const App = {
   },
 
   async init() {
-    // Supabase: Schüler registrieren falls noch kein Klassencode gesetzt
-    if (typeof ltEnsureStudent === 'function') await ltEnsureStudent();
-
     // wire input once
     document.addEventListener('keydown', (ev) => {
+      // Don't feed typing in form fields (class code/name, teacher dashboard) to the game.
+      const t = ev.target;
+      if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
       const k = ev.key.toUpperCase();
       engine.handleKey(k);
       // For browsers with suspended audio context: first interaction resumes audio
@@ -1319,9 +1321,102 @@ const App = {
       App.showMenu();
     });
 
+    // classroom (student) wiring
+    if (classBtn) classBtn.addEventListener('click', () => App.openClassModal());
+    if (classCloseBtn) classCloseBtn.addEventListener('click', () => App.closeClassModal());
+    if (classLeaveBtn) classLeaveBtn.addEventListener('click', () => App.leaveClass());
+    if (classJoinBtn) classJoinBtn.addEventListener('click', () => App.joinClass());
+
     // load lessons + show menu
     this._setLessons(await loadLessons());
     this.showMenu();
+  },
+
+  // ---- Classroom (student) ----
+  openClassModal() {
+    if (!classOverlay) return;
+    const m = window.Classroom && Classroom.getMembership();
+    if (classTippy) classTippy.innerHTML = tippySVG('happy');
+    if (classTitle) classTitle.textContent = m ? 'Deine Klasse' : 'Klasse beitreten';
+    if (classCodeInput) classCodeInput.value = m ? m.code : '';
+    if (classNameInput) classNameInput.value = m ? m.name : '';
+    if (classMsg) {
+      classMsg.className = '';
+      if (!window.Classroom || !Classroom.configured) {
+        classMsg.textContent = 'Klassen-Feature ist noch nicht eingerichtet (Supabase-Config fehlt).';
+      } else if (!Classroom.ready) {
+        classMsg.textContent = 'Keine Verbindung – Internet nötig, um beizutreten.';
+      } else {
+        classMsg.textContent = m ? `Beigetreten als ${m.name}.` : '';
+        if (m) classMsg.className = 'ok';
+      }
+    }
+    if (classLeaveBtn) classLeaveBtn.style.display = m ? 'inline-flex' : 'none';
+    overlay.style.display = 'none';
+    classOverlay.style.display = 'flex';
+  },
+
+  closeClassModal() {
+    if (classOverlay) classOverlay.style.display = 'none';
+  },
+
+  async joinClass() {
+    if (!classMsg) return;
+    if (!window.Classroom || !Classroom.ready) {
+      classMsg.className = '';
+      classMsg.textContent = 'Beitritt nicht möglich (Config/Internet prüfen).';
+      return;
+    }
+    try {
+      await Classroom.join(classCodeInput.value, classNameInput.value);
+      App.pushProgress();
+      classMsg.className = 'ok';
+      classMsg.textContent = 'Beigetreten! Dein Fortschritt wird jetzt geteilt.';
+      App.updateClassStatus();
+      setTimeout(() => App.closeClassModal(), 900);
+    } catch (e) {
+      classMsg.className = '';
+      classMsg.textContent = (e && e.message) ? e.message : 'Beitritt fehlgeschlagen.';
+    }
+  },
+
+  leaveClass() {
+    if (window.Classroom) Classroom.clearMembership();
+    if (classMsg) { classMsg.className = ''; classMsg.textContent = 'Klasse verlassen.'; }
+    App.updateClassStatus();
+    App.closeClassModal();
+  },
+
+  updateClassStatus() {
+    if (!classBtn) return;
+    const m = window.Classroom && Classroom.getMembership();
+    if (m) {
+      classBtn.classList.add('joined');
+      classBtn.textContent = `👩‍🏫 Klasse ${m.code} · ${m.name}`;
+    } else {
+      classBtn.classList.remove('joined');
+      classBtn.textContent = '👩‍🏫 Klasse beitreten';
+    }
+  },
+
+  // Send current progress to the teacher dashboard (no-op if not joined).
+  pushProgress() {
+    if (!(window.Classroom && Classroom.ready && Classroom.getMembership())) return;
+    try {
+      const total = this.levels.length;
+      const passed = this.progress.unlockedIndex;
+      const li = this._activeLessonIndex();
+      const inLesson = this.levels.filter(l => l._lessonIndex === li);
+      const firstIdx = inLesson.length ? inLesson[0]._flatIndex : 0;
+      const within = clamp(passed - firstIdx + 1, 1, inLesson.length || 1);
+      Classroom.push({
+        levelsPassed: passed,
+        totalLevels: total,
+        currentLesson: li + 1,
+        currentLevel: within,
+        accuracy: Math.round(engine.getAccuracy() * 100)
+      });
+    } catch (e) {}
   },
 
   hideIntro() {
@@ -1415,6 +1510,8 @@ const App = {
     this._currentPage = this._activeLessonIndex();
     this._renderLevelList();
     this.updateHUD(true);
+    this.updateClassStatus();
+    if (classOverlay) classOverlay.style.display = 'none';
   },
 
   showLearningPath() {

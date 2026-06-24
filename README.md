@@ -22,6 +22,27 @@ Ohne Server greift automatisch eine eingebaute Level-Fallback-Liste (`FALLBACK_L
 
 ## Dateien
 
-- `index.html` – Markup, Styles und UI (Menü, Lernpfad, Overlays).
+- `index.html` – Markup, Styles und UI (Menü, Lernpfad, Overlays, Lehrer-Dashboard).
 - `game_touchtyping.js` – Spiel-Engine, Modi, Level-Laden, Fortschritt (localStorage).
 - `levels.json` – Lektionen und Level (Buchstaben, Ziele, Schwierigkeit).
+- `classroom.js` / `supabase-config.js` – Klassen-Sync via Supabase.
+
+## Lehrer-Modus / Klassen (optional, via Supabase)
+
+Spiel und Lehrer-Dashboard liegen jetzt in einer Datei (`index.html`). Über das
+**⋮-Menü oben rechts** erreichst du:
+
+- „🎓 Klasse beitreten" – Schüler treten mit einem Klassencode bei.
+- „👩‍🏫 Lehrer-Dashboard" – Live-Überblick über den Fortschritt der Klasse.
+
+Einrichtung (einmalig):
+
+1. Kostenloses Projekt auf [supabase.com](https://supabase.com) anlegen.
+2. In `supabase-config.js` die `url` und den `anonKey` eintragen (Supabase → Project Settings → API).
+3. Das SQL aus dem Dashboard (⋮ → Lehrer-Dashboard → „Einrichtung") einmal im Supabase SQL-Editor ausführen.
+
+Ohne diese Einrichtung läuft die App ganz normal weiter – nur das Klassen-Feature ist inaktiv.
+
+Datenschutz: Die Beispiel-RLS-Regeln sind offen (jede Person mit Code + öffentlichem
+anon-Key kann Klassendaten lesen/schreiben). Nur Vornamen/Spitznamen verwenden; für echten
+Schutz Supabase-Auth + striktere Policies ergänzen.
