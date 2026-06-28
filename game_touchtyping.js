@@ -264,61 +264,6 @@ function paletteFromHex(hex) {
   };
 }
 
-// =========================
-// MASCOT: Tippy, the typing tiger
-// =========================
-// Inline SVG so it works offline / under file:// with no image assets.
-function tippySVG(mood = 'happy') {
-  const O = '#ff9d3c', inner = '#ffd7a8', stripe = '#3b2a1d',
-        muz = '#fff4e6', nose = '#6b4a36', pink = '#ff8fab', eye = '#2a1c12';
-
-  let eyes, mouth, extra = '';
-  if (mood === 'cheer') {
-    eyes = `<path d="M40 63 q6.5 -9 13 0" stroke="${eye}" stroke-width="3.6" fill="none" stroke-linecap="round"/>
-            <path d="M67 63 q6.5 -9 13 0" stroke="${eye}" stroke-width="3.6" fill="none" stroke-linecap="round"/>`;
-    mouth = `<path d="M48 83 Q60 102 72 83 Z" fill="${nose}"/>
-             <path d="M56 90 q4 7 8 0 Z" fill="${pink}"/>`;
-    extra = `<path d="M16 30 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2 Z" fill="#ffd84d"/>
-             <path d="M101 38 l1.6 4 4 1.6 -4 1.6 -1.6 4 -1.6 -4 -4 -1.6 4 -1.6 Z" fill="#ffd84d"/>`;
-  } else if (mood === 'sad') {
-    eyes = `<circle cx="46" cy="65" r="6.5" fill="#fff"/><circle cx="74" cy="65" r="6.5" fill="#fff"/>
-            <circle cx="46" cy="67" r="3.3" fill="${eye}"/><circle cx="74" cy="67" r="3.3" fill="${eye}"/>
-            <path d="M39 56 l12 5" stroke="${stripe}" stroke-width="3" fill="none" stroke-linecap="round"/>
-            <path d="M81 56 l-12 5" stroke="${stripe}" stroke-width="3" fill="none" stroke-linecap="round"/>`;
-    mouth = `<path d="M60 81 v5" stroke="${nose}" stroke-width="2.6" stroke-linecap="round"/>
-             <path d="M52 91 q8 -6 16 0" stroke="${nose}" stroke-width="2.6" fill="none" stroke-linecap="round"/>`;
-    extra = `<path d="M90 54 q4 7 0 11 q-4 -4 0 -11 Z" fill="#7cc6ff"/>`;
-  } else { // happy
-    eyes = `<circle cx="46" cy="64" r="7" fill="#fff"/><circle cx="74" cy="64" r="7" fill="#fff"/>
-            <circle cx="47" cy="65" r="3.5" fill="${eye}"/><circle cx="73" cy="65" r="3.5" fill="${eye}"/>`;
-    mouth = `<path d="M60 81 v6" stroke="${nose}" stroke-width="2.6" stroke-linecap="round"/>
-             <path d="M60 87 q-7 6 -13 1 M60 87 q7 6 13 1" stroke="${nose}" stroke-width="2.6" fill="none" stroke-linecap="round"/>`;
-  }
-
-  return `<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" class="tippy-svg" aria-hidden="true">
-    <g>
-      <path d="M28 42 C22 16 38 12 48 26 C41 31 33 36 30 44 Z" fill="${O}"/>
-      <path d="M92 42 C98 16 82 12 72 26 C79 31 87 36 90 44 Z" fill="${O}"/>
-      <path d="M32 36 C30 25 37 23 42 29 Z" fill="${inner}"/>
-      <path d="M88 36 C90 25 83 23 78 29 Z" fill="${inner}"/>
-    </g>
-    <ellipse cx="60" cy="66" rx="42" ry="40" fill="${O}"/>
-    <path d="M60 28 q-4 9 0 17"  stroke="${stripe}" stroke-width="4"   fill="none" stroke-linecap="round"/>
-    <path d="M47 31 q-3 8 -1 15" stroke="${stripe}" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-    <path d="M73 31 q3 8 1 15"   stroke="${stripe}" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-    <path d="M19 60 q9 2 15 1"   stroke="${stripe}" stroke-width="3.2" fill="none" stroke-linecap="round"/>
-    <path d="M19 70 q9 1 14 -1"  stroke="${stripe}" stroke-width="3"   fill="none" stroke-linecap="round"/>
-    <path d="M101 60 q-9 2 -15 1" stroke="${stripe}" stroke-width="3.2" fill="none" stroke-linecap="round"/>
-    <path d="M101 70 q-9 1 -14 -1" stroke="${stripe}" stroke-width="3"  fill="none" stroke-linecap="round"/>
-    <ellipse cx="60" cy="84" rx="24" ry="17" fill="${muz}"/>
-    <ellipse cx="34" cy="78" rx="6" ry="4" fill="${pink}" opacity="0.7"/>
-    <ellipse cx="86" cy="78" rx="6" ry="4" fill="${pink}" opacity="0.7"/>
-    <path d="M53 73 h14 l-7 8 Z" fill="${nose}"/>
-    ${eyes}
-    ${mouth}
-    ${extra}
-  </svg>`;
-}
 
 // =========================
 // LEVEL MODEL + LOADER
@@ -358,49 +303,49 @@ const FALLBACK_LESSONS = [
     { id:'L1_2', title:'Mittelfinger: D K', intro:'Die Mittelfinger kommen dazu: D und K. Finger ruhen auf der Grundreihe.', allowedLetters:['F','J','D','K'], exercise:{type:'letters',minLen:1,maxLen:1}, rules:{durationSeconds:80,minKeystrokes:25,minAccuracy:0.86}, difficulty:{spawnRate:0.0103,speed:0.92}, lives:3 },
     { id:'L1_3', title:'Ringfinger: S L', intro:'Die Ringfinger: S und L. Nur den Finger bewegen, nicht die Hand.', allowedLetters:['S','D','F','J','K','L'], exercise:{type:'letters',minLen:1,maxLen:1}, rules:{durationSeconds:85,minKeystrokes:30,minAccuracy:0.86}, difficulty:{spawnRate:0.0105,speed:0.94}, lives:3 },
     { id:'L1_4', title:'Kleiner Finger: A', intro:'Der kleine Finger der linken Hand: A. Damit liegen alle Anker.', allowedLetters:HOME7, exercise:{type:'letters',minLen:1,maxLen:1}, rules:{durationSeconds:90,minKeystrokes:30,minAccuracy:0.86}, difficulty:{spawnRate:0.0108,speed:0.96}, lives:3 },
-    { id:'L1_5', title:'Grundreihe-Mix', intro:'Erste Kombinationen aus der Grundreihe. Gleichmäßig statt schnell.', allowedLetters:HOME7, exercise:{type:'letters',minLen:2,maxLen:3}, rules:{durationSeconds:95,minKeystrokes:85,minAccuracy:0.86}, difficulty:{spawnRate:0.011,speed:0.98}, lives:3 }
+    { id:'L1_5', title:'Grundstellung gemischt', intro:'Alle Buchstaben der Grundstellung – einzeln und bunt gemischt.', allowedLetters:HOME7, exercise:{type:'letters',minLen:1,maxLen:1}, rules:{durationSeconds:95,minKeystrokes:35,minAccuracy:0.86}, difficulty:{spawnRate:0.011,speed:0.98}, lives:3 }
   ]},
-  { id:'LE2_GRUNDREIHE', title:'Grundreihe komplett', subtitle:'G, H und erste Kombinationen', color:'#58cc02', levels:[
+  { id:'LE2_GRUNDREIHE', title:'Grundreihe komplett', subtitle:'G, H und die komplette Grundreihe', color:'#58cc02', levels:[
     { id:'L2_1', title:'Mitte: G H', intro:'Die Zeigefinger strecken sich zur Mitte: G und H. Danach zurück zur Grundstellung.', allowedLetters:HOME9, exercise:{type:'letters',minLen:1,maxLen:1}, rules:{durationSeconds:100,minKeystrokes:35,minAccuracy:0.87}, difficulty:{spawnRate:0.0112,speed:1.0}, lives:3 },
-    { id:'L2_2', title:'Kurze Kombis', intro:'Zwei-Buchstaben-Folgen aus der kompletten Grundreihe.', allowedLetters:HOME9, exercise:{type:'letters',minLen:2,maxLen:2}, rules:{durationSeconds:105,minKeystrokes:80,minAccuracy:0.87}, difficulty:{spawnRate:0.0115,speed:1.02}, lives:3 },
-    { id:'L2_3', title:'Längere Folgen', intro:'Längere Sequenzen für mehr Routine in den Fingern.', allowedLetters:HOME9, exercise:{type:'letters',minLen:2,maxLen:4}, rules:{durationSeconds:110,minKeystrokes:130,minAccuracy:0.87}, difficulty:{spawnRate:0.0118,speed:1.04}, lives:3 },
+    { id:'L2_2', title:'Grundreihe gemischt', intro:'Alle Buchstaben der kompletten Grundreihe bunt gemischt.', allowedLetters:HOME9, exercise:{type:'letters',minLen:1,maxLen:1}, rules:{durationSeconds:105,minKeystrokes:40,minAccuracy:0.87}, difficulty:{spawnRate:0.0115,speed:1.02}, lives:3 },
+    { id:'L2_3', title:'Grundreihe sicher', intro:'Mehr Tempo auf der kompletten Grundreihe.', allowedLetters:HOME9, exercise:{type:'letters',minLen:1,maxLen:1}, rules:{durationSeconds:110,minKeystrokes:45,minAccuracy:0.87}, difficulty:{spawnRate:0.0118,speed:1.04}, lives:3 },
     { id:'L2_4', title:'Grundreihe-Wörter', intro:'Echte Wörter nur aus der Grundreihe. Tippe sie als Einheit.', allowedLetters:HOME9, exercise:{type:'words',words:['DAS','FALL','HALL','GLAS','HALS','SAAL','GAS','LAG','SAG','HAG']}, rules:{durationSeconds:115,minKeystrokes:115,minAccuracy:0.87}, difficulty:{spawnRate:0.0086,speed:1.05}, lives:3 }
   ]},
   { id:'LE3_OBEN_I', title:'Obere Reihe I', subtitle:'E I R U – Mittel- und Zeigefinger hoch', color:'#13c1b6', levels:[
-    { id:'L3_1', title:'Mittelfinger hoch: E I', intro:'Obere Reihe, Mittelfinger nach oben: E (links) und I (rechts).', allowedLetters:['A','S','D','F','G','H','J','K','L','E','I'], exercise:{type:'letters',minLen:1,maxLen:2}, rules:{durationSeconds:120,minKeystrokes:75,minAccuracy:0.87}, difficulty:{spawnRate:0.0123,speed:1.07}, lives:3 },
-    { id:'L3_2', title:'Zeigefinger hoch: R U', intro:'Zeigefinger nach oben: R und U. Achte auf die schräge Bewegung.', allowedLetters:OBEN1, exercise:{type:'letters',minLen:1,maxLen:2}, rules:{durationSeconds:120,minKeystrokes:75,minAccuracy:0.87}, difficulty:{spawnRate:0.0125,speed:1.09}, lives:3 },
-    { id:'L3_3', title:'EIRU im Mix', intro:'Grundreihe und neue Buchstaben gemischt.', allowedLetters:OBEN1, exercise:{type:'letters',minLen:2,maxLen:3}, rules:{durationSeconds:125,minKeystrokes:130,minAccuracy:0.87}, difficulty:{spawnRate:0.0128,speed:1.11}, lives:3 },
+    { id:'L3_1', title:'Mittelfinger hoch: E I', intro:'Obere Reihe, Mittelfinger nach oben: E (links) und I (rechts).', allowedLetters:['A','S','D','F','G','H','J','K','L','E','I'], exercise:{type:'letters',minLen:1,maxLen:1}, rules:{durationSeconds:120,minKeystrokes:50,minAccuracy:0.87}, difficulty:{spawnRate:0.0123,speed:1.07}, lives:3 },
+    { id:'L3_2', title:'Zeigefinger hoch: R U', intro:'Zeigefinger nach oben: R und U. Achte auf die schräge Bewegung.', allowedLetters:OBEN1, exercise:{type:'letters',minLen:1,maxLen:1}, rules:{durationSeconds:120,minKeystrokes:50,minAccuracy:0.87}, difficulty:{spawnRate:0.0125,speed:1.09}, lives:3 },
+    { id:'L3_3', title:'EIRU im Mix', intro:'Grundreihe und neue Buchstaben gemischt.', allowedLetters:OBEN1, exercise:{type:'letters',minLen:1,maxLen:1}, rules:{durationSeconds:125,minKeystrokes:55,minAccuracy:0.87}, difficulty:{spawnRate:0.0128,speed:1.11}, lives:3 },
     { id:'L3_4', title:'Erste Wörter', intro:'Deine ersten echten Wörter mit E, I, R, U.', allowedLetters:OBEN1, exercise:{type:'words',words:['DIE','DER','DREI','FREI','HIER','RUF','REIS','LEER','EILE','REIHE','FEIER','RUHE']}, rules:{durationSeconds:130,minKeystrokes:160,minAccuracy:0.88}, difficulty:{spawnRate:0.0094,speed:1.13}, lives:3 }
   ]},
   { id:'LE4_OBEN_II', title:'Obere Reihe II', subtitle:'T Z W O Q P – obere Reihe komplett', color:'#2b8cff', levels:[
-    { id:'L4_1', title:'T Z', intro:'Zeigefinger-Dehnung nach oben innen: T und Z.', allowedLetters:['A','S','D','F','G','H','J','K','L','E','I','R','U','T','Z'], exercise:{type:'letters',minLen:1,maxLen:2}, rules:{durationSeconds:135,minKeystrokes:90,minAccuracy:0.88}, difficulty:{spawnRate:0.0133,speed:1.15}, lives:3 },
-    { id:'L4_2', title:'W O', intro:'Ringfinger nach oben: W und O.', allowedLetters:['A','S','D','F','G','H','J','K','L','E','I','R','U','T','Z','W','O'], exercise:{type:'letters',minLen:1,maxLen:2}, rules:{durationSeconds:140,minKeystrokes:95,minAccuracy:0.88}, difficulty:{spawnRate:0.0135,speed:1.17}, lives:3 },
-    { id:'L4_3', title:'Q P', intro:'Kleine Finger nach oben: Q und P.', allowedLetters:OBEN2, exercise:{type:'letters',minLen:1,maxLen:3}, rules:{durationSeconds:145,minKeystrokes:130,minAccuracy:0.88}, difficulty:{spawnRate:0.0138,speed:1.19}, lives:3 },
-    { id:'L4_4', title:'Obere Reihe komplett', intro:'Die gesamte obere Reihe im Zusammenspiel mit der Grundreihe.', allowedLetters:TOP_HOME, exercise:{type:'letters',minLen:2,maxLen:4}, rules:{durationSeconds:150,minKeystrokes:210,minAccuracy:0.88}, difficulty:{spawnRate:0.014,speed:1.21}, lives:3 }
+    { id:'L4_1', title:'T Z', intro:'Zeigefinger-Dehnung nach oben innen: T und Z.', allowedLetters:['A','S','D','F','G','H','J','K','L','E','I','R','U','T','Z'], exercise:{type:'letters',minLen:1,maxLen:1}, rules:{durationSeconds:135,minKeystrokes:60,minAccuracy:0.88}, difficulty:{spawnRate:0.0133,speed:1.15}, lives:3 },
+    { id:'L4_2', title:'W O', intro:'Ringfinger nach oben: W und O.', allowedLetters:['A','S','D','F','G','H','J','K','L','E','I','R','U','T','Z','W','O'], exercise:{type:'letters',minLen:1,maxLen:1}, rules:{durationSeconds:140,minKeystrokes:60,minAccuracy:0.88}, difficulty:{spawnRate:0.0135,speed:1.17}, lives:3 },
+    { id:'L4_3', title:'Q P', intro:'Kleine Finger nach oben: Q und P.', allowedLetters:OBEN2, exercise:{type:'letters',minLen:1,maxLen:1}, rules:{durationSeconds:145,minKeystrokes:65,minAccuracy:0.88}, difficulty:{spawnRate:0.0138,speed:1.19}, lives:3 },
+    { id:'L4_4', title:'Obere Reihe komplett', intro:'Die gesamte obere Reihe im Zusammenspiel mit der Grundreihe.', allowedLetters:TOP_HOME, exercise:{type:'letters',minLen:1,maxLen:1}, rules:{durationSeconds:150,minKeystrokes:70,minAccuracy:0.88}, difficulty:{spawnRate:0.014,speed:1.21}, lives:3 }
   ]},
   { id:'LE5_UNTEN_I', title:'Untere Reihe I', subtitle:'C M V N – Finger nach unten', color:'#a560f0', levels:[
-    { id:'L5_1', title:'C M', intro:'Untere Reihe, Mittelfinger nach unten: C und M.', allowedLetters:TOP_HOME.concat(['C','M']), exercise:{type:'letters',minLen:1,maxLen:2}, rules:{durationSeconds:155,minKeystrokes:110,minAccuracy:0.88}, difficulty:{spawnRate:0.0143,speed:1.23}, lives:3 },
-    { id:'L5_2', title:'V N', intro:'Zeigefinger nach unten: V und N.', allowedLetters:UNTEN1, exercise:{type:'letters',minLen:1,maxLen:2}, rules:{durationSeconds:155,minKeystrokes:110,minAccuracy:0.88}, difficulty:{spawnRate:0.0145,speed:1.25}, lives:3 },
-    { id:'L5_3', title:'Untere Reihe im Mix', intro:'Neue untere Buchstaben gemischt mit dem Rest.', allowedLetters:UNTEN1, exercise:{type:'letters',minLen:2,maxLen:3}, rules:{durationSeconds:160,minKeystrokes:195,minAccuracy:0.88}, difficulty:{spawnRate:0.0147,speed:1.27}, lives:3 },
+    { id:'L5_1', title:'C M', intro:'Untere Reihe, Mittelfinger nach unten: C und M.', allowedLetters:TOP_HOME.concat(['C','M']), exercise:{type:'letters',minLen:1,maxLen:1}, rules:{durationSeconds:155,minKeystrokes:75,minAccuracy:0.88}, difficulty:{spawnRate:0.0143,speed:1.23}, lives:3 },
+    { id:'L5_2', title:'V N', intro:'Zeigefinger nach unten: V und N.', allowedLetters:UNTEN1, exercise:{type:'letters',minLen:1,maxLen:1}, rules:{durationSeconds:155,minKeystrokes:75,minAccuracy:0.88}, difficulty:{spawnRate:0.0145,speed:1.25}, lives:3 },
+    { id:'L5_3', title:'Untere Reihe im Mix', intro:'Neue untere Buchstaben gemischt mit dem Rest.', allowedLetters:UNTEN1, exercise:{type:'letters',minLen:1,maxLen:1}, rules:{durationSeconds:160,minKeystrokes:80,minAccuracy:0.88}, difficulty:{spawnRate:0.0147,speed:1.27}, lives:3 },
     { id:'L5_4', title:'Wörter', intro:'Wörter mit M, N, V und C.', allowedLetters:UNTEN1, exercise:{type:'words',words:['MEIN','NEIN','NAME','MANN','KOMM','WIND','MOND','WEIN','NEUN','MINE','KANN','DENN','WANN']}, rules:{durationSeconds:165,minKeystrokes:235,minAccuracy:0.89}, difficulty:{spawnRate:0.0108,speed:1.29}, lives:3 }
   ]},
   { id:'LE6_UNTEN_II', title:'Untere Reihe II', subtitle:'B X Y – untere Reihe komplett', color:'#ff5fa2', levels:[
-    { id:'L6_1', title:'B', intro:'Zeigefinger-Dehnung nach unten: B.', allowedLetters:TOP_HOME.concat(['C','M','V','N','B']), exercise:{type:'letters',minLen:1,maxLen:3}, rules:{durationSeconds:170,minKeystrokes:170,minAccuracy:0.89}, difficulty:{spawnRate:0.0152,speed:1.31}, lives:3 },
-    { id:'L6_2', title:'X Y', intro:'Ring- und kleiner Finger nach unten: X und Y.', allowedLetters:UNTEN2, exercise:{type:'letters',minLen:1,maxLen:3}, rules:{durationSeconds:175,minKeystrokes:180,minAccuracy:0.89}, difficulty:{spawnRate:0.0155,speed:1.33}, lives:3 },
-    { id:'L6_3', title:'Untere Reihe komplett', intro:'Die komplette untere Reihe Y X C V B N M mit der Grundstellung.', allowedLetters:['Y','X','C','V','B','N','M','A','S','D','F','G','H','J','K','L'], exercise:{type:'letters',minLen:2,maxLen:3}, rules:{durationSeconds:180,minKeystrokes:235,minAccuracy:0.89}, difficulty:{spawnRate:0.0158,speed:1.35}, lives:3 },
-    { id:'L6_4', title:'Alles gemischt', intro:'Erstmals alle drei Reihen zusammen.', allowedLetters:ALL26, exercise:{type:'letters',minLen:2,maxLen:4}, rules:{durationSeconds:185,minKeystrokes:295,minAccuracy:0.89}, difficulty:{spawnRate:0.016,speed:1.36}, lives:3 }
+    { id:'L6_1', title:'B', intro:'Zeigefinger-Dehnung nach unten: B.', allowedLetters:TOP_HOME.concat(['C','M','V','N','B']), exercise:{type:'letters',minLen:1,maxLen:1}, rules:{durationSeconds:170,minKeystrokes:85,minAccuracy:0.89}, difficulty:{spawnRate:0.0152,speed:1.31}, lives:3 },
+    { id:'L6_2', title:'X Y', intro:'Ring- und kleiner Finger nach unten: X und Y.', allowedLetters:UNTEN2, exercise:{type:'letters',minLen:1,maxLen:1}, rules:{durationSeconds:175,minKeystrokes:90,minAccuracy:0.89}, difficulty:{spawnRate:0.0155,speed:1.33}, lives:3 },
+    { id:'L6_3', title:'Untere Reihe komplett', intro:'Die komplette untere Reihe Y X C V B N M mit der Grundstellung.', allowedLetters:['Y','X','C','V','B','N','M','A','S','D','F','G','H','J','K','L'], exercise:{type:'letters',minLen:1,maxLen:1}, rules:{durationSeconds:180,minKeystrokes:95,minAccuracy:0.89}, difficulty:{spawnRate:0.0158,speed:1.35}, lives:3 },
+    { id:'L6_4', title:'Alles gemischt', intro:'Erstmals alle drei Reihen zusammen.', allowedLetters:ALL26, exercise:{type:'letters',minLen:1,maxLen:1}, rules:{durationSeconds:185,minKeystrokes:100,minAccuracy:0.89}, difficulty:{spawnRate:0.016,speed:1.36}, lives:3 }
   ]},
   { id:'LE7_ALPHABET', title:'Das ganze Alphabet', subtitle:'Alle Buchstaben im Zusammenspiel', color:'#ff9600', levels:[
-    { id:'L7_1', title:'Alphabet kurz', intro:'Alle Buchstaben in kurzen, zufälligen Folgen.', allowedLetters:ALL26, exercise:{type:'letters',minLen:2,maxLen:3}, rules:{durationSeconds:190,minKeystrokes:255,minAccuracy:0.89}, difficulty:{spawnRate:0.0163,speed:1.38}, lives:3 },
-    { id:'L7_2', title:'Bigramme', intro:'Häufige Buchstabenpaare wie EN, ER, CH – die Bausteine echter Wörter.', allowedLetters:ALL26, exercise:{type:'words',words:['EN','ER','CH','DE','IE','ND','TE','EI','IN','ES','UN','ST','GE','BE','SE','RE','AN','DA','IS','CK']}, rules:{durationSeconds:190,minKeystrokes:150,minAccuracy:0.89}, difficulty:{spawnRate:0.0119,speed:1.4}, lives:3 },
-    { id:'L7_3', title:'Alphabet flott', intro:'Einzelne Buchstaben, aber schneller und dichter.', allowedLetters:ALL26, exercise:{type:'letters',minLen:1,maxLen:2}, rules:{durationSeconds:195,minKeystrokes:160,minAccuracy:0.89}, difficulty:{spawnRate:0.0168,speed:1.42}, lives:3 },
-    { id:'L7_4', title:'Alphabet-Challenge', intro:'Längere Folgen bei höherem Tempo.', allowedLetters:ALL26, exercise:{type:'letters',minLen:2,maxLen:4}, rules:{durationSeconds:200,minKeystrokes:335,minAccuracy:0.9}, difficulty:{spawnRate:0.017,speed:1.44}, lives:3 }
+    { id:'L7_1', title:'Alphabet einzeln', intro:'Alle Buchstaben des Alphabets, einzeln und zufällig.', allowedLetters:ALL26, exercise:{type:'letters',minLen:1,maxLen:1}, rules:{durationSeconds:190,minKeystrokes:100,minAccuracy:0.89}, difficulty:{spawnRate:0.0163,speed:1.38}, lives:3 },
+    { id:'L7_2', title:'Wörter quer durchs ABC', intro:'Ganze deutsche Wörter, die viele verschiedene Buchstaben nutzen.', allowedLetters:ALL26, exercise:{type:'words',words:['HUND','KATZE','MAUS','VOGEL','BAUM','HAUS','TISCH','STUHL','LAMPE','BLUME','APFEL','BIRNE','WALD','BERG','MEER','WIND','REGEN','SONNE','MOND','STERN','NACHT','LICHT','SPIEL','GARTEN','MORITZ','JIM']}, rules:{durationSeconds:190,minKeystrokes:350,minAccuracy:0.89}, difficulty:{spawnRate:0.0119,speed:1.4}, lives:3 },
+    { id:'L7_3', title:'Alphabet flott', intro:'Einzelne Buchstaben, aber schneller und dichter.', allowedLetters:ALL26, exercise:{type:'letters',minLen:1,maxLen:1}, rules:{durationSeconds:195,minKeystrokes:110,minAccuracy:0.89}, difficulty:{spawnRate:0.0168,speed:1.42}, lives:3 },
+    { id:'L7_4', title:'Alphabet-Challenge', intro:'Alle Buchstaben bei vollem Tempo.', allowedLetters:ALL26, exercise:{type:'letters',minLen:1,maxLen:1}, rules:{durationSeconds:200,minKeystrokes:110,minAccuracy:0.9}, difficulty:{spawnRate:0.017,speed:1.44}, lives:3 }
   ]},
   { id:'LE8_WOERTER', title:'Wörter & Tempo', subtitle:'Echte Wörter und Geschwindigkeit', color:'#ff4b4b', levels:[
     { id:'L8_1', title:'Kurze Wörter', intro:'Kurze, häufige Wörter. Tippe sie als Einheit, nicht Buchstabe für Buchstabe.', allowedLetters:ALL26, exercise:{type:'words',words:['UND','DER','DIE','DAS','IST','EIN','MIT','ICH','DEN','VON','BEI','AUS','NUR','WIR','HAT','WAR','WIE','WAS','HER','MAN','DOCH','AUCH','NOCH','DANN']}, rules:{durationSeconds:205,minKeystrokes:265,minAccuracy:0.9}, difficulty:{spawnRate:0.0124,speed:1.46}, lives:3 },
     { id:'L8_2', title:'Mittlere Wörter', intro:'Mittellange Wörter. Achte auf gleichmäßigen Rhythmus über das ganze Wort.', allowedLetters:ALL26, exercise:{type:'words',words:['HAUS','BAUM','HAND','KIND','BUCH','BLUME','SONNE','TISCH','STUHL','WASSER','GARTEN','FENSTER','MORGEN','ABEND','LICHT','WELT','ZEIT','JAHR','SPIEL','KATZE','HUND','VOGEL','STRAND','WOLKE']}, rules:{durationSeconds:210,minKeystrokes:425,minAccuracy:0.9}, difficulty:{spawnRate:0.0126,speed:1.48}, lives:4 },
     { id:'L8_3', title:'Lange Wörter', intro:'Lange Wörter als Herausforderung. Ruhig bleiben und sauber zu Ende tippen.', allowedLetters:ALL26, exercise:{type:'words',words:['COMPUTER','TASTATUR','PROGRAMM','FREUNDE','SCHULE','ARBEIT','FAMILIE','WETTER','STRASSE','BAHNHOF','KUCHEN','SOMMER','WINTER','FRUEHLING','HERBST','URLAUB','NATUR','MASCHINE','GESCHENK','FREIHEIT','GEDANKE','ZUKUNFT']}, rules:{durationSeconds:215,minKeystrokes:625,minAccuracy:0.9}, difficulty:{spawnRate:0.0128,speed:1.5}, lives:4 },
-    { id:'L8_4', title:'Speed-Finale', intro:'Geschwindigkeits-Finale: alle Buchstaben, schnelle Anschläge, 5 Leben. Zeig, was du kannst!', allowedLetters:ALL26, exercise:{type:'letters',minLen:1,maxLen:2}, rules:{durationSeconds:220,minKeystrokes:195,minAccuracy:0.9}, difficulty:{spawnRate:0.018,speed:1.52}, lives:5 }
+    { id:'L8_4', title:'Speed-Finale', intro:'Geschwindigkeits-Finale: alle Buchstaben, schnelle Anschläge, 5 Leben. Zeig, was du kannst!', allowedLetters:ALL26, exercise:{type:'letters',minLen:1,maxLen:1}, rules:{durationSeconds:220,minKeystrokes:130,minAccuracy:0.9}, difficulty:{spawnRate:0.018,speed:1.52}, lives:5 }
   ]}
 ];
 
@@ -446,6 +391,17 @@ function loadProgress() {
 function saveProgress(p) {
   try { localStorage.setItem(PROGRESS_KEY, JSON.stringify(p)); } catch {}
 }
+
+// Common German words (A–Z only, no umlauts) for Free Mode. Filtered at
+// runtime to those typable with the currently unlocked letters.
+const GERMAN_WORDS = [
+  'DAS','DER','DIE','UND','IST','EIN','MIT','ICH','DEN','VON','AUS','NUR','WIR','HAT','WAR','WIE','WAS','MAN','DOCH','AUCH','NOCH','DANN',
+  'FALL','HALL','GLAS','HALS','SAAL','GAS','LAG','SAG','HAUS','BAUM','HAND','KIND','BUCH','MAUS','HUND','KATZE','VOGEL','BLUME','SONNE',
+  'TISCH','STUHL','LAMPE','APFEL','BIRNE','WALD','FELD','BERG','MEER','WIND','REGEN','MOND','STERN','NACHT','MORGEN','ABEND','LICHT',
+  'WELT','ZEIT','JAHR','SPIEL','STRAND','WOLKE','WASSER','GARTEN','FENSTER','SCHULE','ARBEIT','FREUNDE','FAMILIE','COMPUTER','TASTATUR',
+  'LEBEN','MENSCH','STADT','LAND','WOCHE','MONAT','FARBE','MUSIK','WISSEN','DENKEN','LAUFEN','TRINKEN','ESSEN','LACHEN','LERNEN','LESEN',
+  'FAHREN','KOCHEN','STEIN','HIMMEL','ERDE','FEUER','HERZ','KOPF','STRASSE','PLATZ','MARKT','GELD','FRAGE','ANTWORT','LIEBE','BLATT'
+];
 
 // =========================
 // WORD/SEQUENCE GENERATOR
@@ -566,16 +522,34 @@ class FallingBubbleEngine {
     // accuracy tracking
     this.correctKeystrokes = 0;
     this.totalKeystrokes = 0;
+    this._lifeImmuneUntil = 0;
 
     // rendering config
-    this.fontFamily = "'Space Grotesk', system-ui, sans-serif";
+    this.fontFamily = "'Atkinson Hyperlegible', system-ui, sans-serif";
     this.fontSize = 20;
     this.tileHeight = 52;
     this.tilePadding = 22;
 
+    // Tetris-style grid: tiles spawn centred, snapped to lanes, on visible
+    // height levels (rows). Lane/row size is fixed; lane count adapts to width.
+    this.cellW = 92;
+    this.cellH = 60;
+    this.gridTop = 70;       // play area starts below the HUD
+    this.bottomMargin = 14;  // danger line = lowest height level
+
     // when set, all tiles use this single palette (learning mode = lesson colour);
     // when null, tiles pick a random palette (free mode = colourful).
     this.forcedPalette = null;
+  }
+
+  // Centred play grid: a band of lanes in the middle of the screen.
+  _grid() {
+    const W = this.canvas.width;
+    const cols = clamp(Math.round((W * 0.6) / this.cellW), 5, 9);
+    const gridW = cols * this.cellW;
+    const x0 = Math.round((W - gridW) / 2);
+    return { cols, cellW: this.cellW, cellH: this.cellH, gridW, x0,
+             top: this.gridTop, bottom: this.canvas.height - this.bottomMargin };
   }
 
   resetSession({ maxLives, speed, levelTarget }) {
@@ -621,6 +595,8 @@ class FallingBubbleEngine {
   start() {
     this.running = true;
     this.gameOver = false;
+    this._lastTs = 0;
+    this._spawnAcc = 0;
     requestAnimationFrame((t) => this._updateLoop(t));
   }
 
@@ -637,36 +613,45 @@ class FallingBubbleEngine {
   _createBubble(text) {
     const c = this.ctx;
     c.save();
-    c.font = `${this.fontSize}px ${this.fontFamily}`;
+    c.font = `700 ${this.fontSize}px ${this.fontFamily}`;
     const textW = c.measureText(text).width;
     c.restore();
 
-    const baseW = Math.max(70, textW + this.tilePadding * 2);
-    const w = baseW * (0.95 + Math.random() * 0.12);
-    const h = this.tileHeight + (Math.random() - 0.5) * 6;
-    const rotation = (Math.random() - 0.5) * 0.07;
+    const g = this._grid();
 
-    let x = 0, ok = false;
-    const margin = 12;
-    for (let attempt = 0; attempt < 80; attempt++) {
-      x = Math.random() * (this.canvas.width - margin * 2) + margin;
-      ok = true;
-      for (const o of this.objects) {
-        if (Math.abs(o.x - x) < (o.width + w) * 0.35) { ok = false; break; }
-      }
-      if (ok) break;
+    // Clean grid tiles, a bit narrower than the lane so columns keep a clear
+    // gap; words may be wider and simply block neighbouring spawns.
+    const w = Math.max(56, textW + this.tilePadding * 2);
+    const h = this.cellH - 12;
+    const rotation = 0;
+    const y = g.top - h / 2; // enter at the top height level
+
+    // Minimum free space we insist on around every tile.
+    const GAP_X = 16, GAP_Y = 20;
+
+    // Try lanes in random order; place the tile only where it clears all
+    // existing tiles (with spacing). If nothing fits, skip this frame.
+    const lanes = [];
+    for (let i = 0; i < g.cols; i++) lanes.push(i);
+    for (let i = lanes.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [lanes[i], lanes[j]] = [lanes[j], lanes[i]];
     }
 
-    const y = -h - 10;
-
-    const palette = this.forcedPalette || TILE_PALETTES[Math.floor(Math.random() * TILE_PALETTES.length)];
-
-    return {
-      x, y, width: w, height: h, rotation,
-      text,
-      progress: 0,
-      palette
-    };
+    for (const lane of lanes) {
+      let x = g.x0 + lane * g.cellW + g.cellW / 2;
+      x = clamp(x, g.x0 + w / 2, g.x0 + g.gridW - w / 2);
+      let ok = true;
+      for (const o of this.objects) {
+        if (Math.abs(o.x - x) < (o.width + w) / 2 + GAP_X &&
+            Math.abs(o.y - y) < (o.height + h) / 2 + GAP_Y) { ok = false; break; }
+      }
+      if (ok) {
+        const palette = this.forcedPalette || TILE_PALETTES[Math.floor(Math.random() * TILE_PALETTES.length)];
+        return { x, y, width: w, height: h, rotation, text, progress: 0, palette };
+      }
+    }
+    return null; // no spot with enough spacing right now
   }
 
   _drawBubble(b) {
@@ -733,14 +718,14 @@ class FallingBubbleEngine {
     }
 
     // cursor underline on next char
-    if (b.progress < full.length) {
+    if (full.length > 1 && b.progress < full.length) {
       const nextW = c.measureText(full[b.progress]).width;
       c.strokeStyle = pal.stroke;
       c.lineWidth = 2;
       c.globalAlpha = 0.9;
       c.beginPath();
-      c.moveTo(cursorX, this.fontSize * 0.46);
-      c.lineTo(cursorX + Math.max(8, nextW), this.fontSize * 0.46);
+      c.moveTo(cursorX, this.fontSize * 0.56);
+      c.lineTo(cursorX + Math.max(8, nextW), this.fontSize * 0.56);
       c.stroke();
       c.globalAlpha = 1;
     }
@@ -751,8 +736,6 @@ class FallingBubbleEngine {
   handleKey(k) {
     if (!this.running || this.gameOver || this.isTransition) return;
     if (!/^[A-Z]$/.test(k)) return;
-
-    this.totalKeystrokes++;
 
     // choose nearest bubble that expects this key (lowest y among matching)
     let hitBubble = null;
@@ -770,8 +753,14 @@ class FallingBubbleEngine {
     }
 
     if (!hitBubble) {
-      // wrong key => lose life, no score penalty
+      // Wrong key. After a mistake you're immune for 1s, so a burst of
+      // wrong keys can't drain all lives at once (extra wrong keys during
+      // that window are ignored, not counted toward accuracy).
+      const now = performance.now();
+      if (now < (this._lifeImmuneUntil || 0)) return;
+      this.totalKeystrokes++;
       this.lives = Math.max(0, this.lives - 1);
+      this._lifeImmuneUntil = now + 1000;
       this.flashTimer = 8;
       this.onStatsChanged();
       if (this.lives <= 0) this.triggerGameOver('lives');
@@ -779,6 +768,7 @@ class FallingBubbleEngine {
     }
 
     // correct keystroke
+    this.totalKeystrokes++;
     this.correctKeystrokes++;
     hitBubble.progress++;
     playSmallClick();
@@ -806,38 +796,94 @@ class FallingBubbleEngine {
     return this.correctKeystrokes / this.totalKeystrokes;
   }
 
-  _updateLoop() {
+  // Tetris-like grid: centred lane columns + horizontal height levels.
+  _drawGrid() {
+    const c = this.ctx;
+    const g = this._grid();
+    const accent = this.forcedPalette ? this.forcedPalette.stroke : '#4facfe';
+
+    c.save();
+
+    // play-band background
+    c.fillStyle = 'rgba(255,255,255,0.012)';
+    c.fillRect(g.x0, g.top, g.gridW, g.bottom - g.top);
+
+    // horizontal height levels (rows), aligned to the bottom danger line
+    c.lineWidth = 1;
+    for (let y = g.bottom; y >= g.top - 0.5; y -= g.cellH) {
+      c.strokeStyle = 'rgba(255,255,255,0.05)';
+      c.beginPath();
+      c.moveTo(g.x0, Math.round(y) + 0.5);
+      c.lineTo(g.x0 + g.gridW, Math.round(y) + 0.5);
+      c.stroke();
+    }
+
+    // vertical lane separators
+    for (let i = 0; i <= g.cols; i++) {
+      const x = g.x0 + i * g.cellW;
+      c.strokeStyle = (i === 0 || i === g.cols)
+        ? hexWithAlpha(accent, 0.22) : 'rgba(255,255,255,0.04)';
+      c.beginPath();
+      c.moveTo(Math.round(x) + 0.5, g.top);
+      c.lineTo(Math.round(x) + 0.5, g.bottom);
+      c.stroke();
+    }
+
+    // danger line (lowest height level)
+    c.strokeStyle = 'rgba(255,107,107,0.55)';
+    c.lineWidth = 2;
+    c.beginPath();
+    c.moveTo(g.x0, g.bottom + 1);
+    c.lineTo(g.x0 + g.gridW, g.bottom + 1);
+    c.stroke();
+
+    c.restore();
+  }
+
+  _updateLoop(ts) {
     if (!this.running) return;
+
+    // Delta-time so the fall is smooth and even regardless of frame rate.
+    const now = ts || performance.now();
+    let dt = (now - (this._lastTs || now)) / 1000;
+    this._lastTs = now;
+    if (dt > 0.05) dt = 0.05; // clamp after tab switches / hiccups
 
     // hide falling letters during transitions completely
     if (this.isTransition) {
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-      requestAnimationFrame(() => this._updateLoop());
+      requestAnimationFrame((t) => this._updateLoop(t));
       return;
     }
 
     const c = this.ctx;
     c.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    // spawn
-    const spawnRate = this.getSpawnRate();
-    if (Math.random() < spawnRate) {
-      const text = this.getNextText();
-      this.objects.push(this._createBubble(text));
+    // Tetris-style grid backdrop (lanes + height levels)
+    this._drawGrid();
+
+    // Spawn on a steady cadence (letters per second) instead of a random
+    // per-frame chance, so the rain of letters is even.
+    const perSec = this.getSpawnRate() * 60;
+    this._spawnAcc = (this._spawnAcc || 0) + dt * perSec;
+    while (this._spawnAcc >= 1) {
+      this._spawnAcc -= 1;
+      const b = this._createBubble(this.getNextText());
+      if (b) this.objects.push(b);
     }
 
     // update particles first (behind bubbles)
     this.particles.update();
 
-    // move + draw bubbles
-    const bottomMargin = 12;
+    // move + draw bubbles (constant px/second)
+    const vy = this.speed * 60 * dt;
     for (let i = this.objects.length - 1; i >= 0; i--) {
       const b = this.objects[i];
-      b.y += this.speed;
+      b.y += vy;
 
       this._drawBubble(b);
 
-      if (b.y + b.height / 2 > this.canvas.height - bottomMargin) {
+      if (b.y + b.height / 2 > this.canvas.height - this.bottomMargin) {
         this.triggerGameOver('fell');
         return;
       }
@@ -853,7 +899,7 @@ class FallingBubbleEngine {
       this.flashTimer--;
     }
 
-    requestAnimationFrame(() => this._updateLoop());
+    requestAnimationFrame((t) => this._updateLoop(t));
   }
 }
 
@@ -991,13 +1037,22 @@ class FreeMode {
       return this.SPAWN_BASE + clamp(this.engine.level - 1, 0, 20) * this.SPAWN_INC;
     };
 
+    this._spawnCount = 0;
+    this._eggQueue = [];
     this.engine.getNextText = () => {
-      const pool = this.unlockedPoolByLevel(this.engine.level);
-      // In free mode: mostly single letters; occasionally short sequences
-      const wordChance = clamp(0.10 + this.engine.level * 0.03, 0.10, 0.55);
-      const isSeq = Math.random() < wordChance;
-      if (!isSeq) return pool[Math.floor(Math.random() * pool.length)];
-      return this.generator.generate(pool, 2, 4);
+      // Easter egg: occasionally DAVID followed by WINZ, plus MATJES.
+      this._spawnCount++;
+      if (this._spawnCount % 60 === 0) this._eggQueue.push('DAVID', 'WINZ');
+      if (this._spawnCount % 43 === 0) this._eggQueue.push('MATJES');
+      if (this._eggQueue.length) return this._eggQueue.shift();
+
+      // Free mode: full keyboard from the start, mostly whole German words
+      // (closer to real typing) with the odd single letter mixed in.
+      const wordChance = clamp(0.55 + this.engine.level * 0.015, 0.55, 0.75);
+      if (Math.random() < wordChance) {
+        return GERMAN_WORDS[Math.floor(Math.random() * GERMAN_WORDS.length)];
+      }
+      return ALL26[Math.floor(Math.random() * ALL26.length)];
     };
 
     this.engine.start();
@@ -1072,20 +1127,31 @@ class LearningMode {
 
     const allowed = (lvl.allowedLetters || []).map(x => String(x).toUpperCase()).filter(x => /^[A-Z]$/.test(x));
     const exercise = lvl.exercise || {};
-    const minLen = exercise.minLen ?? 1;
-    const maxLen = exercise.maxLen ?? 1;
 
-    // Word-based exercises: pick from a curated list instead of random letters.
+    // Only whole German words or single letters fall — no random letter combos.
     const hasWords = (exercise.type === 'words') && Array.isArray(exercise.words) && exercise.words.length > 0;
     const words = hasWords
       ? exercise.words.map(w => String(w).toUpperCase()).filter(w => /^[A-Z]+$/.test(w))
       : [];
 
+    // Letters introduced in THIS level vs. previously learned ones.
+    const newL = (lvl._newLetters || []).filter(x => allowed.includes(x));
+    const oldL = allowed.filter(x => !newL.includes(x));
+    const duration = (lvl.rules && lvl.rules.durationSeconds) ? lvl.rules.durationSeconds : 60;
+
     this.engine.getNextText = () => {
       if (hasWords && words.length) {
         return words[Math.floor(Math.random() * words.length)];
       }
-      return this.generator.generate(allowed, minLen, maxLen);
+      // Single letters. In "new key" levels start with only the new letters,
+      // then mix in more old ones until it's 50% new / 50% old at the end.
+      if (newL.length && oldL.length) {
+        const progress = clamp((performance.now() - this.startTimeMs) / 1000 / duration, 0, 1);
+        const pNew = 1 - 0.5 * progress; // 100% new -> 50% new
+        const pool = (Math.random() < pNew) ? newL : oldL;
+        return pool[Math.floor(Math.random() * pool.length)];
+      }
+      return allowed.length ? allowed[Math.floor(Math.random() * allowed.length)] : 'F';
     };
 
     // timer / checkpoint
@@ -1094,7 +1160,9 @@ class LearningMode {
     this.timerId = setInterval(() => this._tickRules(), 200);
 
     this.engine.start();
-    const focus = hasWords ? `${words.length} Wörter` : allowed.join(' ');
+    const focus = hasWords
+      ? `${words.length} Wörter`
+      : (newL.length ? `neue Tasten: ${newL.join(' ')}` : allowed.join(' '));
     this._setHint(`${lvl.title} — Fokus: ${focus}`);
   }
 
@@ -1239,8 +1307,13 @@ const App = {
   _setLessons(lessons) {
     this.lessons = lessons || [];
     const flat = [];
+    const seen = new Set(); // letters already introduced in earlier levels
     this.lessons.forEach((lesson, li) => {
       (lesson.levels || []).forEach((lvl, vi) => {
+        const allowed = (lvl.allowedLetters || [])
+          .map(x => String(x).toUpperCase()).filter(x => /^[A-Z]$/.test(x));
+        const newLetters = allowed.filter(x => !seen.has(x)); // first appearance = "new key"
+        allowed.forEach(x => seen.add(x));
         flat.push(Object.assign({}, lvl, {
           _lessonIndex: li,
           _lessonId: lesson.id,
@@ -1248,7 +1321,8 @@ const App = {
           _lessonSubtitle: lesson.subtitle || '',
           _lessonColor: lesson.color || '#4facfe',
           _levelInLesson: vi,
-          _flatIndex: flat.length
+          _flatIndex: flat.length,
+          _newLetters: newLetters
         }));
       });
     });
@@ -1336,7 +1410,6 @@ const App = {
   openClassModal() {
     if (!classOverlay) return;
     const m = window.Classroom && Classroom.getMembership();
-    if (classTippy) classTippy.innerHTML = tippySVG('happy');
     if (classTitle) classTitle.textContent = m ? 'Deine Klasse' : 'Klasse beitreten';
     if (classCodeInput) classCodeInput.value = m ? m.code : '';
     if (classNameInput) classNameInput.value = m ? m.name : '';
@@ -1439,9 +1512,6 @@ const App = {
     feedbackOverlay.classList.toggle('passed', !!fb.passed);
     feedbackOverlay.classList.toggle('failed', !fb.passed);
 
-    // Tippy reacts to the result
-    if (fbTippy) fbTippy.innerHTML = tippySVG(fb.passed ? 'cheer' : 'sad');
-
     fbTitle.textContent = fb.passed ? 'Bestanden!' : 'Nicht bestanden';
     const flvl = App.levels[fb.levelIndex];
     if (flvl) {
@@ -1490,16 +1560,9 @@ const App = {
     this.hideFeedback();
     this.hideIntro();
 
-    // Tippy greets the player on the menu
-    if (tippyHero) {
-      tippyHero.innerHTML =
-        `<div class="tippy-figure tippy-bob">${tippySVG('happy')}</div>` +
-        `<div class="tippy-bubble">Hi, ich bin <b>Tippy</b>! 🐯<br>Folge dem Pfad und werde Schritt für Schritt zum Tipp-Profi.</div>`;
-    }
-
     // UI
     startScreen.style.display = 'flex';
-    subtitleEl.textContent = 'Dein Tipp-Abenteuer mit Tippy – wähle eine Lektion oder den Freien Modus.';
+    subtitleEl.textContent = 'Wähle eine Lektion oder den Freien Modus.';
     playBtn.style.display = 'none'; // legacy button not used now
     backToMenuBtn.style.display = 'none';
 
@@ -1635,12 +1698,6 @@ const App = {
     txt.appendChild(sub);
     header.appendChild(txt);
 
-    if (isActiveLesson) {
-      const t = document.createElement('div');
-      t.className = 'lesson-page-tippy tippy-bob';
-      t.innerHTML = tippySVG('happy');
-      header.appendChild(t);
-    }
     page.appendChild(header);
 
     if (lessonLocked) {
@@ -1706,7 +1763,6 @@ const App = {
 
     const color = lvl._lessonColor || '#4facfe';
     if (introOverlay) introOverlay.style.setProperty('--lesson-color', color);
-    if (introTippy) introTippy.innerHTML = tippySVG('happy');
     if (introLesson) introLesson.textContent =
       `Lektion ${lvl._lessonIndex + 1}.${lvl._levelInLesson + 1} · ${lvl._lessonTitle}`;
     if (introTitle) introTitle.textContent = lvl.title;

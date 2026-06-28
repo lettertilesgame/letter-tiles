@@ -6,7 +6,7 @@
   <title>Letter Tiles</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -180,10 +180,11 @@
     #levelList {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      align-items: center;
+      gap: 14px;
       width: 100%;
-      max-width: 480px;
-      max-height: 56vh;
+      max-width: min(1140px, 94vw);
+      max-height: 60vh;
       overflow-y: auto;
       padding: 2px 4px;
     }
@@ -673,7 +674,7 @@
       justify-content: center;
       gap: 8px;
       width: 100%;
-      max-width: 480px;
+      max-width: min(1140px, 94vw);
     }
     .pager-arrow {
       flex: 0 0 auto;
@@ -719,9 +720,9 @@
     /* ── single lesson page ── */
     .lesson-page {
       width: 100%;
-      max-width: 480px;
-      border-radius: 18px;
-      padding: 18px 18px 28px;
+      max-width: min(1140px, 94vw);
+      border-radius: 20px;
+      padding: 22px 28px 34px;
       background: rgba(13, 27, 62, 0.55);
       border: 1px solid color-mix(in srgb, var(--lesson-color) 24%, transparent);
       box-shadow: inset 0 3px 0 var(--lesson-color),
@@ -778,33 +779,35 @@
     }
     .lesson-lock-banner .lock-ico { font-size: 1rem; line-height: 1.3; }
 
-    /* ── winding level path ── */
+    /* ── winding level path (wide, horizontal stepping stones) ── */
     .lesson-path {
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
       align-items: center;
-      gap: 16px;
-      padding-top: 10px;
+      gap: clamp(20px, 5vw, 72px);
+      padding: 28px 10px 18px;
     }
     .path-node {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 6px;
+      gap: 7px;
       width: auto;
       padding: 0;
       background: none;
       border: none;
     }
     .path-node:active { transform: none; }
-    .path-node:nth-child(odd)  { transform: translateX(-44px); }
-    .path-node:nth-child(even) { transform: translateX(44px); }
+    .path-node:nth-child(odd)  { transform: translateY(-26px); }
+    .path-node:nth-child(even) { transform: translateY(26px); }
     .node-circle {
-      width: 64px; height: 64px;
+      width: 74px; height: 74px;
       border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
       font-family: 'Space Grotesk', sans-serif;
-      font-weight: 700; font-size: 1.4rem;
+      font-weight: 700; font-size: 1.6rem;
       color: #0a1022;
       background: var(--lesson-color);
       box-shadow: 0 5px 0 color-mix(in srgb, var(--lesson-color) 45%, rgba(0,0,0,0.55)),
@@ -1038,7 +1041,7 @@
 
   <!-- Start / menu screen -->
   <div id="start-screen">
-    <div id="tippy-hero"></div>
+    
     <h1>Letter Tiles</h1>
     <p id="subtitle">Wähle Modus: Lernpfad (Level) oder Freier Modus.</p>
 
@@ -1067,7 +1070,7 @@
   <!-- Level intro overlay (Tippy introduces the level) -->
   <div id="intro-overlay">
     <div class="intro-card">
-      <div id="intro-tippy" class="tippy-bob"></div>
+      
       <div class="intro-bubble">
         <span id="intro-lesson"></span>
         <h2 id="intro-title"></h2>
@@ -1083,7 +1086,7 @@
   <!-- Learning-mode feedback overlay -->
   <div id="feedback-overlay">
     <div class="feedback-card">
-      <div id="fb-tippy"></div>
+      
       <h2 id="fb-title">Nicht bestanden</h2>
       <p id="fb-subtitle">Level</p>
       <ul id="fb-criteria"></ul>
@@ -1099,7 +1102,7 @@
   <!-- Class join overlay (student) -->
   <div id="class-overlay">
     <div class="class-card">
-      <div id="class-tippy" class="tippy-bob"></div>
+      
       <h2 id="class-title">Klasse beitreten</h2>
       <p class="class-sub">Gib den Code von deiner Lehrkraft ein – dein Fortschritt erscheint dann in ihrem Dashboard.</p>
       <input id="class-code-input" placeholder="Klassencode" maxlength="8" autocomplete="off" autocapitalize="characters" />
@@ -1149,7 +1152,40 @@
       </table>
       <div id="emptyState" class="empty" style="display:none;">Noch keine Schüler in dieser Klasse. Teile den Code mit deiner Klasse.</div>
 
+      <details>
+        <summary>Einrichtung (einmalig) — Supabase-Tabelle & Zugang</summary>
+        <p style="font-size:0.86rem;line-height:1.6;color:#cbd5e1;margin:8px 0;">
+          1. Kostenloses Projekt auf <a href="https://supabase.com" target="_blank" rel="noopener">supabase.com</a> anlegen.<br>
+          2. <code>supabase-config.js</code> öffnen und <code>url</code> + <code>anonKey</code> eintragen
+          (Project Settings → API).<br>
+          3. Im Supabase SQL-Editor dieses SQL einmal ausführen:
+        </p>
+        <pre><code>create table if not exists public.lt_students (
+  id uuid primary key default gen_random_uuid(),
+  class_code text not null,
+  student_id text not null,
+  name text not null,
+  levels_passed int default 0,
+  total_levels int default 0,
+  current_lesson int default 1,
+  current_level int default 1,
+  accuracy int default 0,
+  updated_at timestamptz default now(),
+  unique (class_code, student_id)
+);
 
+alter table public.lt_students enable row level security;
+create policy "anon read"   on public.lt_students for select to anon using (true);
+create policy "anon insert" on public.lt_students for insert to anon with check (true);
+create policy "anon update" on public.lt_students for update to anon using (true) with check (true);
+
+-- Live-Updates aktivieren:
+alter publication supabase_realtime add table public.lt_students;</code></pre>
+        <p style="font-size:0.84rem;line-height:1.6;color:#fde68a;">
+          Hinweis Datenschutz: Mit diesen offenen Regeln kann jede Person mit Klassencode + öffentlichem
+          anon-Key die Klassendaten lesen/schreiben. Nutze nur Vornamen/Spitznamen und keine sensiblen Daten.
+        </p>
+      </details>
 
       <p class="foot">
         Schüler treten in der App über „🎓 Klasse beitreten" (⋮-Menü) mit diesem Code bei.
