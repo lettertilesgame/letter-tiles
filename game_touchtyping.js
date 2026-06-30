@@ -264,6 +264,61 @@ function paletteFromHex(hex) {
   };
 }
 
+// =========================
+// MASCOT: Tippy, the typing tiger
+// =========================
+// Inline SVG so it works offline / under file:// with no image assets.
+function tippySVG(mood = 'happy') {
+  const O = '#ff9d3c', inner = '#ffd7a8', stripe = '#3b2a1d',
+        muz = '#fff4e6', nose = '#6b4a36', pink = '#ff8fab', eye = '#2a1c12';
+
+  let eyes, mouth, extra = '';
+  if (mood === 'cheer') {
+    eyes = `<path d="M40 63 q6.5 -9 13 0" stroke="${eye}" stroke-width="3.6" fill="none" stroke-linecap="round"/>
+            <path d="M67 63 q6.5 -9 13 0" stroke="${eye}" stroke-width="3.6" fill="none" stroke-linecap="round"/>`;
+    mouth = `<path d="M48 83 Q60 102 72 83 Z" fill="${nose}"/>
+             <path d="M56 90 q4 7 8 0 Z" fill="${pink}"/>`;
+    extra = `<path d="M16 30 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2 Z" fill="#ffd84d"/>
+             <path d="M101 38 l1.6 4 4 1.6 -4 1.6 -1.6 4 -1.6 -4 -4 -1.6 4 -1.6 Z" fill="#ffd84d"/>`;
+  } else if (mood === 'sad') {
+    eyes = `<circle cx="46" cy="65" r="6.5" fill="#fff"/><circle cx="74" cy="65" r="6.5" fill="#fff"/>
+            <circle cx="46" cy="67" r="3.3" fill="${eye}"/><circle cx="74" cy="67" r="3.3" fill="${eye}"/>
+            <path d="M39 56 l12 5" stroke="${stripe}" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <path d="M81 56 l-12 5" stroke="${stripe}" stroke-width="3" fill="none" stroke-linecap="round"/>`;
+    mouth = `<path d="M60 81 v5" stroke="${nose}" stroke-width="2.6" stroke-linecap="round"/>
+             <path d="M52 91 q8 -6 16 0" stroke="${nose}" stroke-width="2.6" fill="none" stroke-linecap="round"/>`;
+    extra = `<path d="M90 54 q4 7 0 11 q-4 -4 0 -11 Z" fill="#7cc6ff"/>`;
+  } else { // happy
+    eyes = `<circle cx="46" cy="64" r="7" fill="#fff"/><circle cx="74" cy="64" r="7" fill="#fff"/>
+            <circle cx="47" cy="65" r="3.5" fill="${eye}"/><circle cx="73" cy="65" r="3.5" fill="${eye}"/>`;
+    mouth = `<path d="M60 81 v6" stroke="${nose}" stroke-width="2.6" stroke-linecap="round"/>
+             <path d="M60 87 q-7 6 -13 1 M60 87 q7 6 13 1" stroke="${nose}" stroke-width="2.6" fill="none" stroke-linecap="round"/>`;
+  }
+
+  return `<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" class="tippy-svg" aria-hidden="true">
+    <g>
+      <path d="M28 42 C22 16 38 12 48 26 C41 31 33 36 30 44 Z" fill="${O}"/>
+      <path d="M92 42 C98 16 82 12 72 26 C79 31 87 36 90 44 Z" fill="${O}"/>
+      <path d="M32 36 C30 25 37 23 42 29 Z" fill="${inner}"/>
+      <path d="M88 36 C90 25 83 23 78 29 Z" fill="${inner}"/>
+    </g>
+    <ellipse cx="60" cy="66" rx="42" ry="40" fill="${O}"/>
+    <path d="M60 28 q-4 9 0 17"  stroke="${stripe}" stroke-width="4"   fill="none" stroke-linecap="round"/>
+    <path d="M47 31 q-3 8 -1 15" stroke="${stripe}" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+    <path d="M73 31 q3 8 1 15"   stroke="${stripe}" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+    <path d="M19 60 q9 2 15 1"   stroke="${stripe}" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+    <path d="M19 70 q9 1 14 -1"  stroke="${stripe}" stroke-width="3"   fill="none" stroke-linecap="round"/>
+    <path d="M101 60 q-9 2 -15 1" stroke="${stripe}" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+    <path d="M101 70 q-9 1 -14 -1" stroke="${stripe}" stroke-width="3"  fill="none" stroke-linecap="round"/>
+    <ellipse cx="60" cy="84" rx="24" ry="17" fill="${muz}"/>
+    <ellipse cx="34" cy="78" rx="6" ry="4" fill="${pink}" opacity="0.7"/>
+    <ellipse cx="86" cy="78" rx="6" ry="4" fill="${pink}" opacity="0.7"/>
+    <path d="M53 73 h14 l-7 8 Z" fill="${nose}"/>
+    ${eyes}
+    ${mouth}
+    ${extra}
+  </svg>`;
+}
 
 // =========================
 // LEVEL MODEL + LOADER
@@ -518,6 +573,8 @@ class FallingBubbleEngine {
     this.onLevelUp = () => {};
     this.onStatsChanged = () => {};
     this.onCheckpoint = () => {};
+    this.onCorrect = () => {};
+    this.onWrong = () => {};
 
     // accuracy tracking
     this.correctKeystrokes = 0;
@@ -763,6 +820,7 @@ class FallingBubbleEngine {
       this._lifeImmuneUntil = now + 1000;
       this.flashTimer = 8;
       this.onStatsChanged();
+      this.onWrong();
       if (this.lives <= 0) this.triggerGameOver('lives');
       return;
     }
@@ -785,6 +843,7 @@ class FallingBubbleEngine {
       this.levelProgress++;
 
       this.onCheckpoint();  // mode-specific (e.g., for learning session progression)
+      this.onCorrect();
       this.onStatsChanged();
     } else {
       this.onStatsChanged();
@@ -1359,6 +1418,12 @@ const App = {
       App.updateHUD();
     };
 
+    // In-game mascot reactions
+    engine.onCorrect = () => App.tippyReact('cheer');
+    engine.onWrong = () => App.tippyReact('oops');
+    const gt0 = document.getElementById('game-tippy');
+    if (gt0) gt0.innerHTML = tippySVG('happy');
+
     // restart from game over: back to menu
     restartBtn.addEventListener('click', () => {
       overlay.style.display = 'none';
@@ -1410,6 +1475,7 @@ const App = {
   openClassModal() {
     if (!classOverlay) return;
     const m = window.Classroom && Classroom.getMembership();
+    if (classTippy) classTippy.innerHTML = tippySVG('happy');
     if (classTitle) classTitle.textContent = m ? 'Deine Klasse' : 'Klasse beitreten';
     if (classCodeInput) classCodeInput.value = m ? m.code : '';
     if (classNameInput) classNameInput.value = m ? m.name : '';
@@ -1492,6 +1558,21 @@ const App = {
     } catch (e) {}
   },
 
+  // Tippy reacts live during play (cheer on a cleared tile, oops on a miss).
+  tippyReact(type) {
+    const el = document.getElementById('game-tippy');
+    if (!el) return;
+    el.innerHTML = tippySVG(type === 'oops' ? 'sad' : 'cheer');
+    el.classList.remove('tippy-cheer', 'tippy-oops');
+    void el.offsetWidth;
+    el.classList.add(type === 'oops' ? 'tippy-oops' : 'tippy-cheer');
+    clearTimeout(this._tippyTimer);
+    this._tippyTimer = setTimeout(() => {
+      el.innerHTML = tippySVG('happy');
+      el.classList.remove('tippy-cheer', 'tippy-oops');
+    }, 700);
+  },
+
   hideIntro() {
     if (introOverlay) introOverlay.style.display = 'none';
   },
@@ -1511,6 +1592,9 @@ const App = {
 
     feedbackOverlay.classList.toggle('passed', !!fb.passed);
     feedbackOverlay.classList.toggle('failed', !fb.passed);
+
+    // Tippy reacts to the result
+    if (fbTippy) fbTippy.innerHTML = tippySVG(fb.passed ? 'cheer' : 'sad');
 
     fbTitle.textContent = fb.passed ? 'Bestanden!' : 'Nicht bestanden';
     const flvl = App.levels[fb.levelIndex];
@@ -1560,9 +1644,16 @@ const App = {
     this.hideFeedback();
     this.hideIntro();
 
+    // Tippy greets the player on the menu
+    if (tippyHero) {
+      tippyHero.innerHTML =
+        `<div class="tippy-figure tippy-bob">${tippySVG('happy')}</div>` +
+        `<div class="tippy-bubble">Hi, ich bin <b>Tippy</b>! 🐯<br>Folge dem Pfad und werde Schritt für Schritt zum Tipp-Profi.</div>`;
+    }
+
     // UI
     startScreen.style.display = 'flex';
-    subtitleEl.textContent = 'Wähle eine Lektion oder den Freien Modus.';
+    subtitleEl.textContent = 'Dein Tipp-Abenteuer mit Tippy – wähle eine Lektion oder den Freien Modus.';
     playBtn.style.display = 'none'; // legacy button not used now
     backToMenuBtn.style.display = 'none';
 
@@ -1698,6 +1789,12 @@ const App = {
     txt.appendChild(sub);
     header.appendChild(txt);
 
+    if (isActiveLesson) {
+      const t = document.createElement('div');
+      t.className = 'lesson-page-tippy tippy-bob';
+      t.innerHTML = tippySVG('happy');
+      header.appendChild(t);
+    }
     page.appendChild(header);
 
     if (lessonLocked) {
@@ -1763,6 +1860,7 @@ const App = {
 
     const color = lvl._lessonColor || '#4facfe';
     if (introOverlay) introOverlay.style.setProperty('--lesson-color', color);
+    if (introTippy) introTippy.innerHTML = tippySVG('happy');
     if (introLesson) introLesson.textContent =
       `Lektion ${lvl._lessonIndex + 1}.${lvl._levelInLesson + 1} · ${lvl._lessonTitle}`;
     if (introTitle) introTitle.textContent = lvl.title;
